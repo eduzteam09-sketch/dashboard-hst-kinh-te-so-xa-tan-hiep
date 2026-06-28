@@ -110,18 +110,17 @@ const INITIAL_PERIODIC_DATA = {
       deiScore: 68,
       b1: { total: 480, active: 280, cloud: 120, erp: 60, ai: 30 },
       b2: { total: 140, active: 110, ecom: 90, qr: 70, export: 8 },
-      b3: {
-        revenue: 6.2,
-        orders: 5400,
-        repeatRatio: 45,
-        newCustomers: 1800,
-        averageValue: 0.95,
+      b3: { revenue: 0, orders: 0, repeatRatio: 0, newCustomers: 0, averageValue: 0 },
+      b4: { ratio: 0, qrPay: 0, mobileBank: 0, eWallet: 0, pos: 0 },
+      b5: { total: 0, active: 0, levels: [0, 0, 0, 0, 0] },
+      b6: { ratio: 0, onlineGuests: 0, revenue: 0 },
+      b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
+      b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
+      b9: {
+        households: { total: 1100, digitalPay: 850, ecom: 320 },
+        smes: { total: 140, erp: 45, crm: 85, cloud: 110 },
+        large: { total: 10, ai: 3, automation: 6 },
       },
-      b4: { ratio: 55, qrPay: 40, mobileBank: 35, eWallet: 15, pos: 10 },
-      b5: { total: 1100, active: 380, levels: [380, 240, 180, 90, 40] },
-      b6: { ratio: 58, onlineGuests: 12000, revenue: 2.8 },
-      b7: { farmRatio: 65, qrTrace: 50, iotFarm: 35, ecomAgri: 48 },
-      b8: { startups: 18, projects: 6, mentors: 20, investors: 8 },
     },
     layer2: {
       nhomA: {
@@ -161,20 +160,18 @@ const INITIAL_PERIODIC_DATA = {
       },
     },
     layer3: {
-      education: { schools: 12, platforms: 3, onlineStudents: 4500 },
-      health: { clinics: 5, ehrRatio: 65, telemedicine: 850 },
-      agri: { smartFarms: 12, iotSensors: 80, traceability: 65 },
-      admin: { publicServices: 95, level4Ratio: 85 },
+      // Thay vì các số hiện tại, hãy set về 0:
+      investmentProjects: { month: 0, quarter: 0, year: 0, total: 0 },
+      planningInfo: { month: 0, quarter: 0, year: 0, total: 0 },
     },
     layer4: {
-      households: { total: 1100, digitalPay: 850, ecom: 320 },
-      smes: { total: 140, erp: 45, crm: 85, cloud: 110 },
-      large: { total: 10, ai: 3, automation: 6 },
+      policy: { total: 0, enterprise: 0, household: 0, cooperative: 0 },
+      feedback: { total: 0, resolved: 0, pending: 0, reviewing: 0 },
     },
     layer5: {
-      points: { total: 35, active: 28 },
-      hubs: { total: 3, communes: 3 },
-      metrics: { coverage: 75, revenue: 10.2, orders: 14500 },
+      points: { total: 0, active: 0 },
+      hubs: { total: 0, communes: 0 },
+      metrics: { coverage: 0, revenue: 0, orders: 0 },
     },
   },
   'T05/2026': {
@@ -186,18 +183,17 @@ const INITIAL_PERIODIC_DATA = {
       deiScore: 76,
       b1: { total: 520, active: 318, cloud: 165, erp: 97, ai: 56 },
       b2: { total: 152, active: 131, ecom: 118, qr: 96, export: 18 },
-      b3: {
-        revenue: 8.5,
-        orders: 8420,
-        repeatRatio: 54,
-        newCustomers: 3256,
-        averageValue: 1.01,
+      b3: { revenue: 0, orders: 0, repeatRatio: 0, newCustomers: 0, averageValue: 0 },
+      b4: { ratio: 0, qrPay: 0, mobileBank: 0, eWallet: 0, pos: 0 },
+      b5: { total: 0, active: 0, levels: [0, 0, 0, 0, 0] },
+      b6: { ratio: 0, onlineGuests: 0, revenue: 0 },
+      b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
+      b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
+      b9: {
+        households: { total: 1500, digitalPay: 1250, ecom: 450 },
+        smes: { total: 180, erp: 65, crm: 110, cloud: 145 },
+        large: { total: 15, ai: 6, automation: 10 },
       },
-      b4: { ratio: 68, qrPay: 48, mobileBank: 32, eWallet: 12, pos: 8 },
-      b5: { total: 1256, active: 486, levels: [486, 326, 244, 136, 64] },
-      b6: { ratio: 72, onlineGuests: 18500, revenue: 4.2 },
-      b7: { farmRatio: 85, qrTrace: 73, iotFarm: 52, ecomAgri: 67 },
-      b8: { startups: 28, projects: 11, mentors: 35, investors: 12 },
     },
     // OFF MẶC ĐỊNH TỪ ĐẦU (ALL ZERO) THEO YÊU CẦU ĐỂ TEST WEB SYNC
     layer2: {
@@ -238,20 +234,18 @@ const INITIAL_PERIODIC_DATA = {
       },
     },
     layer3: {
-      education: { schools: 15, platforms: 5, onlineStudents: 6800 },
-      health: { clinics: 8, ehrRatio: 85, telemedicine: 1450 },
-      agri: { smartFarms: 22, iotSensors: 150, traceability: 88 },
-      admin: { publicServices: 120, level4Ratio: 98 },
+      // Thay vì các số hiện tại, hãy set về 0:
+      investmentProjects: { month: 0, quarter: 0, year: 0, total: 0 },
+      planningInfo: { month: 0, quarter: 0, year: 0, total: 0 },
     },
     layer4: {
-      households: { total: 1500, digitalPay: 1250, ecom: 450 },
-      smes: { total: 180, erp: 65, crm: 110, cloud: 145 },
-      large: { total: 15, ai: 6, automation: 10 },
+      policy: { total: 0, enterprise: 0, household: 0, cooperative: 0 },
+      feedback: { total: 0, resolved: 0, pending: 0, reviewing: 0 },
     },
     layer5: {
-      points: { total: 56, active: 48 },
-      hubs: { total: 4, communes: 4 },
-      metrics: { coverage: 92, revenue: 18.5, orders: 22400 },
+      points: { total: 0, active: 0 },
+      hubs: { total: 0, communes: 0 },
+      metrics: { coverage: 0, revenue: 0, orders: 0 },
     },
   },
 };
@@ -1434,50 +1428,68 @@ export default function App() {
           {[
             {
               id: 'layer-1',
-              label: 'Tầng 1: Tiêu chí Chuyển đổi số Phường Xã 2.0',
+              label: 'Tầng 1: Bộ tiêu chí kinh tế số UBND cấp xã',
               icon: ShieldCheck,
               subtitle: `DEI ${activeMetrics.layer1.deiScore}% (Kinh tế & Xã hội)`,
             },
             {
               id: 'layer-2',
-              label: 'Tầng 2: Hệ sinh thái Kinh tế số',
+              label: 'Tầng 2: Tiêu chí nền tảng kinh tế số',
               icon: Building2,
               subtitle: '5 nhóm A-E khai thác từ Nền tảng',
             },
             {
               id: 'layer-3',
-              label: 'Tầng 3: Hệ sinh thái Toàn diện',
+              label: 'Tầng 3: Tầng 3: Dự án kêu gọi đầu tư - Quy hoạch',
               icon: Landmark,
-              subtitle: 'Giáo dục, Y tế, Nông nghiệp',
+              subtitle: 'Kêu gọi đầu tư, quy hoạch',
             },
             {
               id: 'layer-4',
-              label: 'Tầng 4: Chuyển đổi số Doanh nghiệp',
+              label: 'Tầng 4: Chính sách & Giải đáp kiến nghị',
               icon: Briefcase,
-              subtitle: 'HKD, SME, Doanh nghiệp AI',
+              subtitle: 'Hỗ trợ doanh nghiệp, các góp ý kiến nghị',
             },
             {
               id: 'layer-5',
-              label: 'Tầng 5: Mạng lưới Hub Xanh O2O',
+              label: 'Tầng 5: Điểm trưng bày/Hội quán',
               icon: Network,
               subtitle: 'Điểm bán Xanh, Doanh thu',
             },
             {
-              id: 'ai-command-center',
-              label: 'Trợ lý AI Điều Hành',
-              icon: Bot,
-              isNew: true,
+              id: 'docs-cds',
+              label: 'Tài liệu Chuyển đổi số cho doanh nghiệp',
+              icon: FileText,
+              isExternal: true, // Đánh dấu đây là link ngoài
+              url: 'https://tanhiepangiang.vn/B4222h6a2d1d4cE'
             },
+            {
+              id: 'stats-report',
+              label: 'Thống kê báo cáo',
+              icon: Activity,
+            },
+            // {
+            //   id: 'ai-command-center',
+            //   label: 'Trợ lý AI Điều Hành',
+            //   icon: Bot,
+            //   isNew: true,
+            // },
           ].map((item) => {
             const IconComponent = item.icon;
             const isActive = activeTab === item.id;
+            // Xử lý logic click
+            const handleClick = () => {
+              if (item.isExternal) {
+                window.open(item.url, '_blank', 'noopener,noreferrer');
+              } else {
+                setActiveTab(item.id);
+                setSelectedZone(null);
+              }
+            };
             return (
               <button
                 key={item.id}
-                onClick={() => {
-                  setActiveTab(item.id);
-                  setSelectedZone(null);
-                }}
+                onClick={handleClick}
                 className={`w-full flex flex-col items-start px-4 py-3 rounded-xl transition-all text-left ${
                   isActive
                     ? 'bg-[#122A4E] border-l-4 border-cyan-400 text-cyan-200 font-bold'
@@ -1531,8 +1543,7 @@ export default function App() {
                 <div>
                   <h2 className="text-xl font-black text-cyan-400 flex items-center gap-2">
                     <ShieldCheck className="h-6 w-6 text-cyan-400" /> TẦNG 1: BỘ
-                    TIÊU CHÍ KINH TẾ SỐ PHƯỜNG/XÃ 2.0 (ĐIỂM DEI TỔNG THỂ ={' '}
-                    {activeMetrics.layer1.deiScore}%)
+                    TIÊU CHÍ KINH TẾ SỐ UBND CẤP XÃ
                   </h2>
                   <p className="text-xs text-slate-400">
                     Bản phân rã 8 nhóm chỉ số nhiệm vụ cốt lõi đo lường nền kinh
@@ -1542,413 +1553,400 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* B1. THÔNG TIN ĐƠN VỊ KINH DOANH TRÊN TOÀN TỈNH */}
-                <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between">
-                  <div className="border-b border-cyan-500/10 pb-4 mb-4 flex flex-col gap-3">
-                    {/* Tiêu đề và Nút lọc Phường Xã */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <span className="text-sm font-bold text-cyan-400 flex items-center gap-2">
-                        <Building2 className="h-5 w-5" /> B1: THÔNG TIN ĐƠN VỊ
-                        KINH DOANH - XÃ TÂN HIỆP
-                      </span>
-                    </div>
-
-                    <div className="bg-[#122A4E]/40 px-4 py-3 rounded-xl border border-cyan-500/20 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                      <span className="text-xs font-bold text-white tracking-wide uppercase">
-                        TỔNG SỐ DOANH NGHIỆP/ HKD/ HTX:
-                      </span>
-                      <strong className="text-2xl font-black font-mono text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
-                        {currentZoneData.b1.total.toLocaleString()}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 mb-5 text-center">
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng Số Doanh Nghiệp
-                        <br />
-                        Vừa Và Nhỏ
-                      </span>
-                      <strong className="text-2xl font-mono text-white">
-                        {currentZoneData.b1.dn_total.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng Số
-                        <br />
-                        Hộ Kinh Doanh
-                      </span>
-                      <strong className="text-2xl font-mono text-cyan-300">
-                        {currentZoneData.b1.hkd_total.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng Số
-                        <br />
-                        Hợp Tác Xã
-                      </span>
-                      <strong className="text-2xl font-mono text-emerald-400">
-                        {currentZoneData.b1.htx_total.toLocaleString()}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto bg-[#122A4E]/20 p-4 rounded-xl border border-cyan-500/5">
-                    <span className="text-[10px] text-slate-400 font-bold block uppercase mb-4">
-                      PHỄU CHUYỂN ĐỔI SỐ HOẠT ĐỘNG (CĐS FUNNEL):
+                {/* B1. THÔNG TIN ĐƠN VỊ KINH DOANH TẠI ĐỊA BÀN */}
+                <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col">
+                  <div className="flex items-center gap-2 mb-5">
+                    <Building2 className="h-5 w-5 text-cyan-400" />
+                    <span className="text-sm font-bold text-cyan-400 uppercase tracking-wide">
+                      B1: THÔNG TIN ĐƠN VỊ KINH DOANH - XÃ TÂN HIỆP
                     </span>
-                    <div className="space-y-3.5">
-                      {[
-                        {
-                          label: 'Tổng số Doanh Nghiệp vừa và nhỏ CĐS',
-                          val: currentZoneData.b1.dn_cds,
-                          max: currentZoneData.b1.dn_total,
-                          color: 'bg-cyan-500',
-                          unit: 'DN',
-                        },
-                        {
-                          label: 'Tổng số Hộ Kinh Doanh CĐS',
-                          val: currentZoneData.b1.hkd_cds,
-                          max: currentZoneData.b1.hkd_total,
-                          color: 'bg-emerald-500',
-                          unit: 'HKD',
-                        },
-                        {
-                          label: 'Tổng số Hợp Tác Xã CĐS',
-                          val: currentZoneData.b1.htx_cds,
-                          max: currentZoneData.b1.htx_total,
-                          color: 'bg-indigo-500',
-                          unit: 'HTX',
-                        },
-                      ].map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
-                        >
-                          <span className="w-full sm:w-56 text-[11px] font-semibold text-slate-300">
-                            {item.label}
-                          </span>
-                          <div className="flex-1 bg-[#07111F] h-4 rounded-md overflow-hidden border border-cyan-500/10">
-                            <div
-                              className={`h-full ${item.color} rounded-md`}
-                              style={{
-                                width: `${
-                                  item.max > 0 ? (item.val / item.max) * 100 : 0
-                                }%`,
-                              }}
-                            ></div>
-                          </div>
-                          <span className="text-[10px] font-mono font-bold text-white bg-[#0A2540] border border-cyan-500/20 px-2 py-1 rounded w-20 text-center shrink-0">
-                            {item.val.toLocaleString()} {item.unit}
-                          </span>
-                        </div>
-                      ))}
+                  </div>
+
+                  {/* Tổng số DN/HKD/HTX */}
+                  <div className="bg-[#07111F]/50 px-5 py-4 rounded-xl border border-cyan-500/10 flex justify-between items-center mb-3">
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      TỔNG SỐ DOANH NGHIỆP/ HKD/ HTX:
+                    </span>
+                    <strong className="text-2xl font-black text-emerald-400 font-mono">
+                      {currentZoneData.b1.total}
+                    </strong>
+                  </div>
+
+                  {/* 3 Cột Tổng */}
+                  <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+                    <div className="bg-[#122A4E]/30 p-3 rounded-xl border border-cyan-500/5">
+                      <span className="text-[9px] text-slate-400 block mb-2 font-bold uppercase h-6">
+                        Tổng Số Doanh Nghiệp<br />Vừa Và Nhỏ
+                      </span>
+                      <strong className="text-xl font-mono text-white">
+                        {currentZoneData.b1.dn_total}
+                      </strong>
                     </div>
-                    <span className="text-[10px] text-slate-400 font-bold block uppercase mb-3 pt-4 border-t border-cyan-500/10">
+                    <div className="bg-[#122A4E]/30 p-3 rounded-xl border border-cyan-500/5">
+                      <span className="text-[9px] text-slate-400 block mb-2 font-bold uppercase h-6">
+                        Tổng Số<br />Hộ Kinh Doanh
+                      </span>
+                      <strong className="text-xl font-mono text-cyan-300">
+                        {currentZoneData.b1.hkd_total}
+                      </strong>
+                    </div>
+                    <div className="bg-[#122A4E]/30 p-3 rounded-xl border border-cyan-500/5">
+                      <span className="text-[9px] text-slate-400 block mb-2 font-bold uppercase h-6">
+                        Tổng Số<br />Hợp Tác Xã
+                      </span>
+                      <strong className="text-xl font-mono text-emerald-400">
+                        {currentZoneData.b1.htx_total}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {/* Tổng số CĐS (Có Link) */}
+                  <a 
+                    href="https://tanhiepangiang.vn/28C70aH88eC9063" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-[#07111F]/50 px-5 py-3 rounded-xl border border-cyan-500/10 flex justify-between items-center mb-3 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
+                  >
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      TỔNG SỐ DOANH NGHIỆP/ HKD/ HTX SỐ CHUYỂN ĐỔI SỐ:
+                    </span>
+                    <strong className="text-xl font-black text-emerald-400 font-mono">
+                      {currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds}
+                    </strong>
+                  </a>
+
+                  {/* 3 Cột CĐS (Có Link) */}
+                  <div className="grid grid-cols-3 gap-2 mb-6 text-center">
+                    <a 
+                      href="https://tanhiepangiang.vn/330887F70hF9E63" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
+                    >
+                      <span className="text-[9px] text-slate-400 block mb-1 font-bold uppercase h-6">
+                        Tổng Số Doanh Nghiệp<br />Chuyển Đổi Số
+                      </span>
+                      <strong className="text-lg font-mono text-white block mb-1">
+                        {currentZoneData.b1.dn_cds}
+                      </strong>
+                      <span className="text-[8px] text-slate-500">
+                        Chiếm {currentZoneData.b1.dn_total > 0 ? ((currentZoneData.b1.dn_cds / currentZoneData.b1.dn_total) * 100).toFixed(2) : 0}% ({currentZoneData.b1.dn_cds}/{currentZoneData.b1.dn_total})
+                      </span>
+                    </a>
+                    
+                    <a 
+                      href="https://tanhiepangiang.vn/C0EcH948862e780" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
+                    >
+                      <span className="text-[9px] text-slate-400 block mb-1 font-bold uppercase h-6">
+                        Tổng Số Hộ Kinh Doanh<br />Chuyển Đổi Số
+                      </span>
+                      <strong className="text-lg font-mono text-cyan-300 block mb-1">
+                        {currentZoneData.b1.hkd_cds}
+                      </strong>
+                      <span className="text-[8px] text-slate-500">
+                        Chiếm {currentZoneData.b1.hkd_total > 0 ? ((currentZoneData.b1.hkd_cds / currentZoneData.b1.hkd_total) * 100).toFixed(0) : 0}% ({currentZoneData.b1.hkd_cds}/{currentZoneData.b1.hkd_total})
+                      </span>
+                    </a>
+                    
+                    <a 
+                      href="https://tanhiepangiang.vn/0846B862H659B5E" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
+                    >
+                      <span className="text-[9px] text-slate-400 block mb-1 font-bold uppercase h-6">
+                        Tổng Số Hợp Tác Xã<br />Chuyển Đổi Số
+                      </span>
+                      <strong className="text-lg font-mono text-emerald-400 block mb-1">
+                        {currentZoneData.b1.htx_cds}
+                      </strong>
+                      <span className="text-[8px] text-slate-500">
+                        Chiếm {currentZoneData.b1.htx_total > 0 ? ((currentZoneData.b1.htx_cds / currentZoneData.b1.htx_total) * 100).toFixed(1) : 0}% ({currentZoneData.b1.htx_cds}/{currentZoneData.b1.htx_total})
+                      </span>
+                    </a>
+                  </div>
+
+                  {/* Biểu đồ Tỉ lệ CĐS theo hàng */}
+                  <div className="mt-auto">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase">
+                        TỈ LỆ DOANH NGHIỆP/ HKD/ HTX SỐ CHUYỂN ĐỔI SỐ:
+                      </span>
+                      <span className="text-xs font-mono font-bold text-cyan-400">
+                        ({currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds}/{currentZoneData.b1.total}) {currentZoneData.b1.total > 0 ? (((currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds) / currentZoneData.b1.total) * 100).toFixed(2) : 0}%
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-3 border-b border-cyan-500/10 pb-5 mb-4">
+                      {/* Bar DN */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-[8px] w-8 text-slate-400">DN/VN</span>
+                        <div className="flex-1 flex items-center h-6">
+                           {currentZoneData.b1.dn_total > 0 && (
+                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.dn_total}
+                             </div>
+                           )}
+                           {currentZoneData.b1.dn_cds > 0 && (
+                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_cds / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.dn_cds}
+                             </div>
+                           )}
+                        </div>
+                      </div>
+                      {/* Bar HKD */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-[8px] w-8 text-slate-400">HKD</span>
+                        <div className="flex-1 flex items-center h-6">
+                           {currentZoneData.b1.hkd_total > 0 && (
+                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.hkd_total}
+                             </div>
+                           )}
+                           {currentZoneData.b1.hkd_cds > 0 && (
+                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_cds / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.hkd_cds}
+                             </div>
+                           )}
+                        </div>
+                      </div>
+                      {/* Bar HTX */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-[8px] w-8 text-slate-400">HTX</span>
+                        <div className="flex-1 flex items-center h-6">
+                           {currentZoneData.b1.htx_total > 0 && (
+                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.htx_total}
+                             </div>
+                           )}
+                           {currentZoneData.b1.htx_cds > 0 && (
+                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_cds / currentZoneData.b1.total) * 100}%` }}>
+                               {currentZoneData.b1.htx_cds}
+                             </div>
+                           )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Biểu đồ Cơ cấu Stacked Bar */}
+                    <span className="text-[10px] text-slate-300 font-bold block uppercase mb-2">
                       BIỂU ĐỒ TỈ LỆ CƠ CẤU ĐƠN VỊ KINH DOANH:
                     </span>
-                    {/* Thanh Stacked Bar cho B1 */}
-                    <div className="w-full h-8 bg-[#07111F] rounded-md overflow-hidden flex shadow-inner border border-cyan-500/10">
-                      {currentZoneData.b1.total > 0 ? (
-                        <>
-                          <div
-                            className="bg-cyan-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b1.dn_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b1.dn_total > 0 &&
-                              `DN (${(
-                                (currentZoneData.b1.dn_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              ).toFixed(0)}%)`}
+                    <div className="w-full h-7 bg-[#07111F] flex mb-2">
+                       {currentZoneData.b1.dn_total > 0 && (
+                          <div className="bg-cyan-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
+                            DN ({(currentZoneData.b1.dn_total / currentZoneData.b1.total * 100).toFixed(0)}%)
                           </div>
-                          <div
-                            className="bg-emerald-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b1.hkd_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b1.hkd_total > 0 &&
-                              `HKD (${(
-                                (currentZoneData.b1.hkd_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              ).toFixed(0)}%)`}
+                       )}
+                       {currentZoneData.b1.hkd_total > 0 && (
+                          <div className="bg-emerald-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
+                            HKD ({(currentZoneData.b1.hkd_total / currentZoneData.b1.total * 100).toFixed(0)}%)
                           </div>
-                          <div
-                            className="bg-indigo-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b1.htx_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b1.htx_total > 0 &&
-                              `HTX (${(
-                                (currentZoneData.b1.htx_total /
-                                  currentZoneData.b1.total) *
-                                100
-                              ).toFixed(0)}%)`}
+                       )}
+                       {currentZoneData.b1.htx_total > 0 && (
+                          <div className="bg-[#A855F7] h-full flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
+                            HTX ({(currentZoneData.b1.htx_total / currentZoneData.b1.total * 100).toFixed(0)}%)
                           </div>
-                        </>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[10px] text-slate-500">
-                          Chưa có dữ liệu
-                        </div>
-                      )}
+                       )}
                     </div>
-                    {/* Chú thích phía dưới */}
-                    <div className="flex items-center justify-center gap-4 mt-3">
+                    <div className="flex items-center justify-center gap-4">
                       <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b1.dn_total} DN
-                        </span>
+                        <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        <span className="text-[9px] text-slate-400">{currentZoneData.b1.dn_total} DN</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b1.hkd_total} HKD
-                        </span>
+                        <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span className="text-[9px] text-slate-400">{currentZoneData.b1.hkd_total} HKD</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b1.htx_total} HTX
-                        </span>
+                        <span className="w-2 h-2 rounded-full bg-[#A855F7]"></span>
+                        <span className="text-[9px] text-slate-400">{currentZoneData.b1.htx_total} HTX</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* B2. THÔNG TIN SẢN PHẨM */}
-                <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between">
-                  <div className="border-b border-cyan-500/10 pb-4 mb-4 flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-cyan-400 flex items-center gap-2">
-                        <Award className="h-5 w-5" /> B2: THÔNG TIN SẢN PHẨM
-                        TRÊN ĐỊA BÀN
-                      </span>
-                    </div>
-
-                    <div className="bg-[#122A4E]/40 px-4 py-3 rounded-xl border border-cyan-500/20 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                      <span className="text-xs font-bold text-white tracking-wide uppercase">
-                        TỔNG SỐ SẢN PHẨM/DỊCH VỤ:
-                      </span>
-                      <strong className="text-2xl font-black font-mono text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">
-                        {currentZoneData.b2.total.toLocaleString()}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 text-center mb-5">
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng Sản Phẩm
-                        <br />
-                        OCOP
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-white">
-                        {currentZoneData.b2.ocop_total.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng OCOP
-                        <br />3 SAO
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-cyan-400">
-                        {currentZoneData.b2.ocop_3.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng OCOP
-                        <br />4 SAO
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-emerald-400">
-                        {currentZoneData.b2.ocop_4.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng OCOP
-                        <br />5 SAO
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-indigo-400">
-                        {currentZoneData.b2.ocop_5.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng Sản Phẩm
-                        <br />
-                        Thường
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-purple-400">
-                        {currentZoneData.b2.sp_thuong.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/30 p-3.5 rounded-xl border border-cyan-500/10">
-                      <span className="text-[10px] text-slate-400 block mb-2 font-bold uppercase">
-                        Tổng
-                        <br />
-                        Dịch Vụ
-                      </span>
-                      <strong className="text-xl sm:text-2xl font-mono text-amber-400">
-                        {currentZoneData.b2.dv.toLocaleString()}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto bg-[#122A4E]/20 p-4 rounded-xl border border-cyan-500/5 flex-1 flex flex-col">
-                    <span className="text-[10px] text-slate-400 font-bold block uppercase mb-4">
-                      PHỄU CHUYỂN ĐỔI DANH SÁCH CÁC SẢN PHẨM/DỊCH VỤ:
+                <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col">
+                  <div className="flex items-center gap-2 mb-5">
+                    <Award className="h-5 w-5 text-cyan-400" />
+                    <span className="text-sm font-bold text-cyan-400 uppercase tracking-wide">
+                      B2: THÔNG TIN SẢN PHẨM TRÊN ĐỊA BÀN
                     </span>
+                  </div>
 
-                    <div className="space-y-3.5 mb-5">
-                      {[
-                        {
-                          label: 'Sản phẩm thường',
-                          val: currentZoneData.b2.sp_thuong,
-                          max: currentZoneData.b2.total,
-                          color: 'bg-purple-500',
-                        },
-                        {
-                          label: 'Dịch vụ',
-                          val: currentZoneData.b2.dv,
-                          max: currentZoneData.b2.total,
-                          color: 'bg-amber-500',
-                        },
-                        {
-                          label: 'Sản phẩm OCOP',
-                          val: currentZoneData.b2.ocop_total,
-                          max: currentZoneData.b2.total,
-                          color: 'bg-emerald-500',
-                        },
-                      ].map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
+                  {/* Tổng số SP/DV (Có Link) */}
+                  <a 
+                    href="https://tanhiepangiang.vn/B4HbFf11820eB5C"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#07111F]/50 px-5 py-4 rounded-xl border border-cyan-500/10 flex justify-between items-center mb-5 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
+                  >
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      TỔNG SỐ SẢN PHẨM/DỊCH VỤ:
+                    </span>
+                    <strong className="text-2xl font-black text-emerald-400 font-mono">
+                      {currentZoneData.b2.total}
+                    </strong>
+                  </a>
+
+                  {/* Grid Layout Khối Sản Phẩm */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    {/* Cột trái: OCOP */}
+                    <div className="bg-[#122A4E]/30 rounded-xl border border-cyan-500/10 p-4">
+                      {/* Tổng OCOP (Có Link) */}
+                      <a 
+                        href="https://tanhiepangiang.vn/8d2h87Bf66915e4"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-center mb-3 hover:bg-cyan-500/10 rounded-lg py-2 transition-all cursor-pointer border border-transparent hover:border-cyan-500/30"
+                      >
+                        <span className="text-[10px] text-slate-300 uppercase block mb-1">
+                          Tổng Số Sản Phẩm<br />OCOP
+                        </span>
+                        <strong className="text-2xl font-mono text-emerald-400">
+                          {currentZoneData.b2.ocop_total}
+                        </strong>
+                      </a>
+                      
+                      {/* Bar tiến độ chia 3 màu */}
+                      <div className="flex items-center gap-1 mb-2">
+                        <span className="text-[6px] text-slate-500 w-12 leading-tight">SẢN PHẨM OCOP</span>
+                        <div className="flex-1 h-3 flex">
+                          {currentZoneData.b2.ocop_total > 0 && (
+                            <>
+                              <div className="bg-[#60A5FA] h-full" style={{ width: `${(currentZoneData.b2.ocop_3 / currentZoneData.b2.ocop_total) * 100}%` }}></div>
+                              <div className="bg-[#A855F7] h-full" style={{ width: `${(currentZoneData.b2.ocop_4 / currentZoneData.b2.ocop_total) * 100}%` }}></div>
+                              <div className="bg-[#FDBA74] h-full" style={{ width: `${(currentZoneData.b2.ocop_5 / currentZoneData.b2.ocop_total) * 100}%` }}></div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Chú thích màu bar */}
+                      <div className="flex items-center justify-center gap-2 mb-3">
+                        <div className="flex items-center gap-1"><span className="w-1.5 h-1.5 bg-[#60A5FA] rounded-full"></span><span className="text-[6px] text-slate-400">OCOP 3 SAO</span></div>
+                        <div className="flex items-center gap-1"><span className="w-1.5 h-1.5 bg-[#A855F7] rounded-full"></span><span className="text-[6px] text-slate-400">OCOP 4 SAO</span></div>
+                        <div className="flex items-center gap-1"><span className="w-1.5 h-1.5 bg-[#FDBA74] rounded-full"></span><span className="text-[6px] text-slate-400">OCOP 5 SAO</span></div>
+                      </div>
+
+                      {/* 3 Hộp nhỏ OCOP (Có Link) */}
+                      <div className="grid grid-cols-3 gap-1.5 text-center">
+                        <a 
+                          href="https://tanhiepangiang.vn/B21h949f82D4E0B"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-[#07111F]/50 border border-cyan-500/10 rounded-lg py-2 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
                         >
-                          <span className="w-full sm:w-32 text-[11px] font-semibold text-slate-300">
-                            {item.label}
-                          </span>
-                          <div className="flex-1 bg-[#07111F] h-4 rounded-md overflow-hidden border border-cyan-500/10">
-                            <div
-                              className={`h-full ${item.color} rounded-md`}
+                          <span className="block text-[6px] text-slate-400 uppercase">TỔNG SỐ SP<br/>OCOP 3 SAO</span>
+                          <strong className="block text-sm text-[#60A5FA] font-mono my-0.5">{currentZoneData.b2.ocop_3}</strong>
+                          <span className="block text-[6px] text-slate-500">Chiếm {currentZoneData.b2.ocop_total > 0 ? ((currentZoneData.b2.ocop_3/currentZoneData.b2.ocop_total)*100).toFixed(0) : 0}%</span>
+                        </a>
+                        <a 
+                          href="https://tanhiepangiang.vn/2cA8Da8d6hE3981"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-[#07111F]/50 border border-cyan-500/10 rounded-lg py-2 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
+                        >
+                          <span className="block text-[6px] text-slate-400 uppercase">TỔNG SỐ SP<br/>OCOP 4 SAO</span>
+                          <strong className="block text-sm text-[#A855F7] font-mono my-0.5">{currentZoneData.b2.ocop_4}</strong>
+                          <span className="block text-[6px] text-slate-500">Chiếm {currentZoneData.b2.ocop_total > 0 ? ((currentZoneData.b2.ocop_4/currentZoneData.b2.ocop_total)*100).toFixed(0) : 0}%</span>
+                        </a>
+                        <a 
+                          href="https://tanhiepangiang.vn/0a73988dH47f0fB"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-[#07111F]/50 border border-cyan-500/10 rounded-lg py-2 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
+                        >
+                          <span className="block text-[6px] text-slate-400 uppercase">TỔNG SỐ SP<br/>OCOP 5 SAO</span>
+                          <strong className="block text-sm text-[#FDBA74] font-mono my-0.5">{currentZoneData.b2.ocop_5}</strong>
+                          <span className="block text-[6px] text-slate-500">Chiếm {currentZoneData.b2.ocop_total > 0 ? ((currentZoneData.b2.ocop_5/currentZoneData.b2.ocop_total)*100).toFixed(0) : 0}%</span>
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Cột phải: SP Thường & Dịch Vụ */}
+                    <div className="flex flex-col gap-4">
+                      {/* SP Thường (Có Link) */}
+                      <a 
+                        href="https://tanhiepangiang.vn/1a7dBc4hEa25E3D"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#122A4E]/30 rounded-xl border border-cyan-500/10 flex-1 flex flex-col justify-center items-center text-center p-4 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/50 transition-all"
+                      >
+                        <span className="text-[10px] text-slate-300 uppercase block mb-1">
+                          Tổng Số Sản Phẩm<br />Thường
+                        </span>
+                        <strong className="text-2xl font-mono text-emerald-400">
+                          {currentZoneData.b2.sp_thuong}
+                        </strong>
+                      </a>
+                      {/* Dịch Vụ (Có Link) */}
+                      <a 
+                        href="https://tanhiepangiang.vn/1b79B33dH0B97f3"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#122A4E]/30 rounded-xl border border-cyan-500/10 flex-1 flex flex-col justify-center items-center text-center p-4 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/50 transition-all"
+                      >
+                        <span className="text-[10px] text-slate-300 uppercase block mb-1">
+                          Tổng Số<br />Dịch Vụ
+                        </span>
+                        <strong className="text-2xl font-mono text-orange-400">
+                          {currentZoneData.b2.dv}
+                        </strong>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Vùng Donut Chart */}
+                  <div className="mt-auto border-t border-cyan-500/10 pt-4 relative">
+                    <span className="text-xs font-bold text-slate-300 uppercase block mb-6">
+                      TỈ LỆ CÁC LOẠI SẢN PHẨM
+                    </span>
+                    
+                    <div className="flex justify-center relative pb-4">
+                      {/* Vòng Donut bằng CSS */}
+                      {(() => {
+                        const total = currentZoneData.b2.total || 1;
+                        const p_ocop = (currentZoneData.b2.ocop_total / total) * 100;
+                        const p_thuong = (currentZoneData.b2.sp_thuong / total) * 100;
+                        const p_dv = (currentZoneData.b2.dv / total) * 100;
+                        
+                        return (
+                          <div className="relative w-40 h-40">
+                            {/* Conic gradient background */}
+                            <div 
+                              className="w-full h-full rounded-full"
                               style={{
-                                width: `${
-                                  item.max > 0 ? (item.val / item.max) * 100 : 0
-                                }%`,
+                                background: `conic-gradient(
+                                  #60A5FA 0% ${p_ocop}%, 
+                                  #C084FC ${p_ocop}% ${p_ocop + p_thuong}%, 
+                                  #FDBA74 ${p_ocop + p_thuong}% 100%
+                                )`
                               }}
                             ></div>
+                            {/* Inner circle cut out */}
+                            <div className="absolute inset-0 m-auto w-20 h-20 bg-[#0A2540] rounded-full"></div>
+                            
+                            {/* Labels positioned absolutely */}
+                            <div className="absolute top-0 -right-16 text-[9px] text-slate-300 flex flex-col items-center">
+                              <span className="uppercase">Sản Phẩm OCOP</span>
+                              <span className="font-mono">{p_ocop.toFixed(1)}%</span>
+                            </div>
+                            <div className="absolute bottom-[-15px] right-0 text-[9px] text-slate-300 flex flex-col items-center w-full text-center">
+                              <span className="uppercase">Sản Phẩm Thường</span>
+                              <span className="font-mono">{p_thuong.toFixed(1)}%</span>
+                            </div>
+                            <div className="absolute top-1/2 -left-12 -translate-y-1/2 text-[9px] text-slate-300 flex flex-col items-center">
+                              <span className="uppercase">Dịch Vụ</span>
+                              <span className="font-mono">{p_dv.toFixed(1)}%</span>
+                            </div>
                           </div>
-                          <span className="text-[10px] font-mono font-bold text-white bg-[#0A2540] border border-cyan-500/20 px-2 py-1 rounded w-12 text-center shrink-0">
-                            {item.val}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <span className="text-[10px] text-slate-400 font-bold block uppercase mb-3 pt-4 border-t border-cyan-500/10">
-                      BIỂU ĐỒ TỈ LỆ CÁC HẠNG SẢN PHẨM OCOP:
-                    </span>
-                    <div className="w-full h-8 bg-[#07111F] rounded-md overflow-hidden flex shadow-inner border border-cyan-500/10">
-                      {currentZoneData.b2.ocop_total > 0 ? (
-                        <>
-                          <div
-                            className="bg-cyan-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b2.ocop_3 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b2.ocop_3 > 0 &&
-                              `3 SAO (${(
-                                (currentZoneData.b2.ocop_3 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              ).toFixed(0)}%)`}
-                          </div>
-                          <div
-                            className="bg-emerald-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b2.ocop_4 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b2.ocop_4 > 0 &&
-                              `4 SAO (${(
-                                (currentZoneData.b2.ocop_4 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              ).toFixed(0)}%)`}
-                          </div>
-                          <div
-                            className="bg-indigo-500 h-full flex items-center justify-center text-[10px] font-bold text-slate-900"
-                            style={{
-                              width: `${
-                                (currentZoneData.b2.ocop_5 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              }%`,
-                            }}
-                          >
-                            {currentZoneData.b2.ocop_5 > 0 &&
-                              `5 SAO (${(
-                                (currentZoneData.b2.ocop_5 /
-                                  currentZoneData.b2.ocop_total) *
-                                100
-                              ).toFixed(0)}%)`}
-                          </div>
-                        </>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[10px] text-slate-500">
-                          Chưa có sản phẩm OCOP
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-center gap-4 mt-3">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b2.ocop_3} SP (3 Sao)
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b2.ocop_4} SP (4 Sao)
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-                        <span className="text-[9px] text-slate-300">
-                          {currentZoneData.b2.ocop_5} SP (5 Sao)
-                        </span>
-                      </div>
+                        );
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -2183,10 +2181,14 @@ export default function App() {
                 {/* B6. DU LỊCH */}
                 <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between">
                   <div className="border-b border-cyan-500/10 pb-3 mb-4 flex items-center justify-between">
-                    <span className="text-sm font-bold text-cyan-400 flex items-center gap-2">
-                      <Globe className="h-5 w-5" /> B6. CHUYỂN ĐỔI SỐ DU LỊCH LỮ
-                      HÀNH
-                    </span>
+                    <a 
+                      href="https://tanhiepangiang.vn/8fBhB2Ff059dA08"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-bold text-cyan-400 flex items-center gap-2 hover:text-cyan-200 transition-colors cursor-pointer"
+                    >
+                      <Globe className="h-5 w-5" /> B6. DU LỊCH - ẨM THỰC - LỄ HỘI
+                    </a>
                   </div>
                   <div className="grid grid-cols-3 gap-3 mb-4 text-center">
                     <div className="bg-[#122A4E]/30 p-4 rounded-2xl border border-cyan-500/5">
@@ -2388,6 +2390,43 @@ export default function App() {
                     </div>
                   </div>
                 </div>
+                {/* B9. CĐS DOANH NGHIỆP (Dùng dữ liệu từ layer1.b9) */}
+                <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between lg:col-span-2">
+                  <div className="border-b border-cyan-500/10 pb-3 mb-4 flex items-center justify-between">
+                    <span className="text-sm font-bold text-cyan-400 flex items-center gap-2">
+                      <Compass className="h-5 w-5" /> B9. CĐS DOANH NGHIỆP TỔNG HỢP
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Hộ kinh doanh */}
+                    <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
+                      <span className="text-xs font-bold text-cyan-400 block mb-3">1. Hộ Kinh Doanh Cá Thể</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số hộ:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.households.total.toLocaleString()}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Thanh toán số:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9.households.digitalPay.toLocaleString()}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Bán hàng Ecom:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9.households.ecom.toLocaleString()}</span></div>
+                      </div>
+                    </div>
+                    {/* SME */}
+                    <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
+                      <span className="text-xs font-bold text-indigo-400 block mb-3">2. Doanh nghiệp SME</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số SME:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.smes.total}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Sử dụng Cloud:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9.smes.cloud}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Hệ thống ERP:</span> <span className="font-mono text-amber-400">{activeMetrics.layer1.b9.smes.erp}</span></div>
+                      </div>
+                    </div>
+                    {/* DN Lớn */}
+                    <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
+                      <span className="text-xs font-bold text-purple-400 block mb-3">3. DN Lớn & Tiên phong AI</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-xs text-slate-300"><span>Doanh nghiệp lớn:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.large.total}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tự động hóa:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9.large.automation}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Ứng dụng AI:</span> <span className="font-mono text-rose-400">{activeMetrics.layer1.b9.large.ai}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -2444,7 +2483,7 @@ export default function App() {
                       </span>
                       <div className="space-y-2.5 text-[11px]">
                         <div className="flex justify-between items-center text-slate-300">
-                          <span>DN Số hóa:</span>{' '}
+                          <span>DN CĐS:</span>{' '}
                           <span className="font-mono text-white font-bold">
                             {activeMetrics.layer2.nhomA.digitalEnterprises.year}{' '}
                             <span className="text-[9px] text-emerald-400 font-normal">
@@ -2540,7 +2579,7 @@ export default function App() {
                       </span>
                       <div className="space-y-2.5 text-[11px]">
                         <div className="flex justify-between items-center text-slate-300">
-                          <span>Hệ thống ERP:</span>{' '}
+                          <span>Hệ thống QLDN:</span>{' '}
                           <span className="font-mono text-indigo-400 font-bold">
                             {activeMetrics.layer2.nhomC.erpSystems.year}{' '}
                             <span className="text-[9px] text-emerald-400 font-normal">
@@ -2976,312 +3015,129 @@ export default function App() {
             </div>
           )}
 
-          {/* TAB 4: TẦNG 3 - HỆ SINH THÁI TỔNG */}
+          {/* TAB 4: TẦNG 3 - DỰ ÁN KÊU GỌI ĐẦU TƯ - QUY HOẠCH */}
           {activeTab === 'layer-3' && (
             <div className="bg-[#0A2540] border border-cyan-500/10 rounded-3xl p-6 flex flex-col gap-6 animate-in fade-in duration-300">
-              <div className="border-b border-cyan-500/10 pb-4">
-                <h2 className="text-xl font-black text-indigo-400 flex items-center gap-2">
-                  <Landmark className="h-6 w-6" /> TẦNG 3: HỆ SINH THÁI TỔNG
-                  (LĨNH VỰC CHUYÊN NGÀNH)
-                </h2>
-                <p className="text-xs text-slate-400 mt-1">
-                  Thống kê toàn diện sự thâm nhập của Chuyển đổi số vào các lĩnh
-                  vực dân sinh, giáo dục, y tế và nông nghiệp xanh tại
-                  Phường/Xã.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Giáo dục */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5">
-                  <div className="flex items-center gap-2 mb-4 border-b border-cyan-500/10 pb-2">
-                    <GraduationCap className="h-5 w-5 text-cyan-400" />
-                    <h3 className="font-bold text-white uppercase text-sm">
-                      Giáo dục & Đào tạo
-                    </h3>
+              {/* ... (Giữ nguyên phần header tiêu đề) ... */}
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Biểu đồ 1: Dự án kêu gọi đầu tư */}
+                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-6 flex flex-col">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="font-bold text-white uppercase tracking-wider">DỰ ÁN KÊU GỌI ĐẦU TƯ</span>
+                    <strong className="text-2xl font-black font-mono text-cyan-400">{activeMetrics.layer3.investmentProjects.total}</strong>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Trường số hóa
-                      </span>
-                      <strong className="text-xl font-mono text-white">
-                        {activeMetrics.layer3.education.schools}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Học sinh E-learning
-                      </span>
-                      <strong className="text-xl font-mono text-cyan-400">
-                        {activeMetrics.layer3.education.onlineStudents.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Nền tảng EdTech
-                      </span>
-                      <strong className="text-xl font-mono text-emerald-400">
-                        {activeMetrics.layer3.education.platforms}
-                      </strong>
+                  <div className="relative flex-1 flex mt-2">
+                    {/* ... (Giữ nguyên cấu trúc trục và lưới) ... */}
+                    <div className="relative h-full flex flex-col justify-between py-1 z-10 gap-4">
+                      {[
+                        { val: activeMetrics.layer3.investmentProjects.month, color: 'bg-[#FDBA74]' },
+                        { val: activeMetrics.layer3.investmentProjects.quarter, color: 'bg-[#C084FC]' },
+                        { val: activeMetrics.layer3.investmentProjects.year, color: 'bg-[#60A5FA]' },
+                        { val: activeMetrics.layer3.investmentProjects.total, color: 'bg-[#FDE047]' },
+                      ].map((item, idx) => (
+                        <div key={idx} className="w-full flex items-center h-8">
+                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`} 
+                              style={{ width: `${activeMetrics.layer3.investmentProjects.total > 0 ? (item.val / activeMetrics.layer3.investmentProjects.total) * 100 : 0}%` }}>
+                            {item.val > 0 ? item.val : ""}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Y tế */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5">
-                  <div className="flex items-center gap-2 mb-4 border-b border-cyan-500/10 pb-2">
-                    <Stethoscope className="h-5 w-5 text-rose-400" />
-                    <h3 className="font-bold text-white uppercase text-sm">
-                      Y tế thông minh
-                    </h3>
+                {/* Biểu đồ 2: Thông tin quy hoạch (Có Link) */}
+                <a
+                  href="https://tanhiepangiang.vn/5c0h8e5b050d903"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-6 flex flex-col cursor-pointer hover:bg-[#122A4E]/50 hover:border-cyan-400 transition-all block"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="font-bold text-white uppercase tracking-wider">THÔNG TIN QUY HOẠCH</span>
+                    <strong className="text-2xl font-black font-mono text-cyan-400">{activeMetrics.layer3.planningInfo.total}</strong>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Cơ sở Y tế số
-                      </span>
-                      <strong className="text-xl font-mono text-white">
-                        {activeMetrics.layer3.health.clinics}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Bệnh án điện tử
-                      </span>
-                      <strong className="text-xl font-mono text-rose-400">
-                        {activeMetrics.layer3.health.ehrRatio}%
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Khám Telemedicine
-                      </span>
-                      <strong className="text-xl font-mono text-purple-400">
-                        {activeMetrics.layer3.health.telemedicine.toLocaleString()}
-                      </strong>
+                  <div className="relative flex-1 flex mt-2">
+                    {/* ... (Giữ nguyên cấu trúc trục và lưới) ... */}
+                    <div className="relative h-full flex flex-col justify-between py-1 z-10 gap-4">
+                      {[
+                        { val: activeMetrics.layer3.planningInfo.month, color: 'bg-[#FDBA74]' },
+                        { val: activeMetrics.layer3.planningInfo.quarter, color: 'bg-[#C084FC]' },
+                        { val: activeMetrics.layer3.planningInfo.year, color: 'bg-[#60A5FA]' },
+                        { val: activeMetrics.layer3.planningInfo.total, color: 'bg-[#FDE047]' },
+                      ].map((item, idx) => (
+                        <div key={idx} className="w-full flex items-center h-8">
+                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`} 
+                              style={{ width: `${activeMetrics.layer3.planningInfo.total > 0 ? (item.val / activeMetrics.layer3.planningInfo.total) * 100 : 0}%` }}>
+                            {item.val > 0 ? item.val : ""}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-
-                {/* Nông nghiệp */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5">
-                  <div className="flex items-center gap-2 mb-4 border-b border-cyan-500/10 pb-2">
-                    <Sprout className="h-5 w-5 text-emerald-400" />
-                    <h3 className="font-bold text-white uppercase text-sm">
-                      Nông nghiệp Xanh
-                    </h3>
-                  </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Trang trại thông minh
-                      </span>
-                      <strong className="text-xl font-mono text-white">
-                        {activeMetrics.layer3.agri.smartFarms}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Cảm biến IoT
-                      </span>
-                      <strong className="text-xl font-mono text-emerald-400">
-                        {activeMetrics.layer3.agri.iotSensors}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Truy xuất nguồn gốc
-                      </span>
-                      <strong className="text-xl font-mono text-cyan-400">
-                        {activeMetrics.layer3.agri.traceability}%
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hành chính công */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5">
-                  <div className="flex items-center gap-2 mb-4 border-b border-cyan-500/10 pb-2">
-                    <Building2 className="h-5 w-5 text-amber-400" />
-                    <h3 className="font-bold text-white uppercase text-sm">
-                      Hành chính công
-                    </h3>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-center">
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Tổng Dịch vụ công trực tuyến
-                      </span>
-                      <strong className="text-2xl font-mono text-white">
-                        {activeMetrics.layer3.admin.publicServices}
-                      </strong>
-                    </div>
-                    <div className="bg-[#122A4E]/50 p-3 rounded-xl">
-                      <span className="text-[10px] text-slate-400 block mb-1">
-                        Tỷ lệ xử lý Mức 4
-                      </span>
-                      <strong className="text-2xl font-mono text-amber-400">
-                        {activeMetrics.layer3.admin.level4Ratio}%
-                      </strong>
-                    </div>
-                  </div>
-                </div>
+                </a>
               </div>
             </div>
           )}
 
-          {/* TAB 5: TẦNG 4 - CĐS DOANH NGHIỆP */}
           {activeTab === 'layer-4' && (
             <div className="bg-[#0A2540] border border-cyan-500/10 rounded-3xl p-6 flex flex-col gap-6 animate-in fade-in duration-300">
               <div className="border-b border-cyan-500/10 pb-4">
                 <h2 className="text-xl font-black text-amber-400 flex items-center gap-2">
-                  <Briefcase className="h-6 w-6" /> TẦNG 4: CHUYỂN ĐỔI SỐ DOANH
-                  NGHIỆP TỔNG HỢP
+                  <Briefcase className="h-6 w-6" /> TẦNG 4: CHÍNH SÁCH & GIẢI ĐÁP KIẾN NGHỊ
                 </h2>
                 <p className="text-xs text-slate-400 mt-1">
-                  Đánh giá phân lớp từ Hộ kinh doanh cá thể, SME cho đến Doanh
-                  nghiệp lớn có ứng dụng Trí tuệ nhân tạo (AI).
+                  Các chính sách hỗ trợ doanh nghiệp và danh sách các góp ý kiến nghị của người dân
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Hộ kinh doanh */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5 flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-cyan-400 uppercase block mb-4 border-b border-cyan-500/10 pb-2">
-                      1. Hộ Kinh Doanh Cá Thể
-                    </span>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Tổng số Hộ Khảo sát:
-                        </span>
-                        <strong className="font-mono text-lg text-white">
-                          {activeMetrics.layer4.households.total.toLocaleString()}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Sử dụng Thanh toán số:
-                        </span>
-                        <strong className="font-mono text-lg text-emerald-400">
-                          {activeMetrics.layer4.households.digitalPay.toLocaleString()}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Bán hàng Social/Ecom:
-                        </span>
-                        <strong className="font-mono text-lg text-cyan-400">
-                          {activeMetrics.layer4.households.ecom.toLocaleString()}
-                        </strong>
-                      </div>
-                    </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Biểu đồ 1: Chính sách hỗ trợ (CÓ LINK) */}
+                <a
+                  href="https://tanhiepangiang.vn/5aE67hA421AdC5C"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-6 flex flex-col cursor-pointer hover:bg-[#122A4E]/50 hover:border-cyan-400 transition-all block"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="font-bold text-white uppercase tracking-wider">CHÍNH SÁCH HỖ TRỢ</span>
+                    <strong className="text-2xl font-black font-mono text-cyan-400">{activeMetrics.layer4.policy.total}</strong>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-cyan-500/10">
-                    <div className="h-2 w-full bg-[#07111F] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-emerald-500"
-                        style={{
-                          width: `${
-                            (activeMetrics.layer4.households.digitalPay /
-                              activeMetrics.layer4.households.total) *
-                            100
-                          }%`,
-                        }}
-                      ></div>
-                    </div>
-                    <span className="text-[10px] text-slate-400 mt-1 block text-right">
-                      Độ phủ thanh toán số
-                    </span>
+                  <div className="space-y-4">
+                    {['Doanh nghiệp', 'Hộ kinh doanh', 'Hợp tác xã'].map((label, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <span className="text-xs text-slate-300 w-24">{label}</span>
+                        <div className="flex-1 h-6 bg-[#07111F] flex items-center">
+                          <div className="h-full bg-[#86EFAC]" style={{ width: `${(activeMetrics.layer4.policy.total > 0 ? (i === 0 ? activeMetrics.layer4.policy.enterprise : i === 1 ? activeMetrics.layer4.policy.household : activeMetrics.layer4.policy.cooperative) / activeMetrics.layer4.policy.total * 100 : 0)}%` }}></div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                </a>
 
-                {/* SME */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5 flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-indigo-400 uppercase block mb-4 border-b border-cyan-500/10 pb-2">
-                      2. Doanh nghiệp SME
-                    </span>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Tổng số SME Khảo sát:
-                        </span>
-                        <strong className="font-mono text-lg text-white">
-                          {activeMetrics.layer4.smes.total}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Sử dụng Cloud:
-                        </span>
-                        <strong className="font-mono text-lg text-cyan-400">
-                          {activeMetrics.layer4.smes.cloud}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Phần mềm CRM:
-                        </span>
-                        <strong className="font-mono text-lg text-purple-400">
-                          {activeMetrics.layer4.smes.crm}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Hệ thống quản trị ERP:
-                        </span>
-                        <strong className="font-mono text-lg text-amber-400">
-                          {activeMetrics.layer4.smes.erp}
-                        </strong>
-                      </div>
-                    </div>
+                {/* Biểu đồ 2: Giải đáp kiến nghị (CÓ LINK) */}
+                <a
+                  href="https://quanly.tanhiepangiang.vn/1cHf9b5674Ad2e2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-6 flex flex-col cursor-pointer hover:bg-[#122A4E]/50 hover:border-cyan-400 transition-all block"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="font-bold text-white uppercase tracking-wider">GIẢI ĐÁP KIẾN NGHỊ</span>
+                    <strong className="text-2xl font-black font-mono text-cyan-400">{activeMetrics.layer4.feedback.total}</strong>
                   </div>
-                </div>
-
-                {/* DN Lớn / AI */}
-                <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-5 flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-purple-400 uppercase block mb-4 border-b border-cyan-500/10 pb-2">
-                      3. DN Lớn & Tiên phong AI
-                    </span>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Doanh nghiệp Đầu ngành:
-                        </span>
-                        <strong className="font-mono text-lg text-white">
-                          {activeMetrics.layer4.large.total}
-                        </strong>
+                  <div className="space-y-4">
+                    {['Đã giải đáp', 'Chưa giải đáp', 'Xem xét'].map((label, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <span className="text-xs text-slate-300 w-24">{label}</span>
+                        <div className="flex-1 h-6 bg-[#07111F] flex items-center">
+                          <div className="h-full bg-[#FB7185]" style={{ width: `${(activeMetrics.layer4.feedback.total > 0 ? (i === 0 ? activeMetrics.layer4.feedback.resolved : i === 1 ? activeMetrics.layer4.feedback.pending : activeMetrics.layer4.feedback.reviewing) / activeMetrics.layer4.feedback.total * 100 : 0)}%` }}></div>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Tự động hóa chuỗi cung ứng:
-                        </span>
-                        <strong className="font-mono text-lg text-emerald-400">
-                          {activeMetrics.layer4.large.automation}
-                        </strong>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-300">
-                          Có tích hợp Trí tuệ AI/Big Data:
-                        </span>
-                        <strong className="font-mono text-lg text-rose-400 animate-pulse">
-                          {activeMetrics.layer4.large.ai}
-                        </strong>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                  <div className="mt-4 bg-purple-500/10 p-2.5 rounded-lg border border-purple-500/20 flex items-start gap-2">
-                    <Cpu className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                    <span className="text-[10px] text-purple-200">
-                      Việc ứng dụng AI đang là xu hướng cốt lõi để nâng cao năng
-                      lực cạnh tranh cốt lõi.
-                    </span>
-                  </div>
-                </div>
+                </a>
               </div>
             </div>
           )}
@@ -3291,8 +3147,7 @@ export default function App() {
             <div className="bg-[#0A2540] border border-cyan-500/10 rounded-3xl p-6 flex flex-col gap-6 animate-in fade-in duration-300">
               <div className="border-b border-cyan-500/10 pb-4">
                 <h2 className="text-xl font-black text-emerald-400 flex items-center gap-2">
-                  <Network className="h-6 w-6" /> TẦNG 5: MẠNG LƯỚI O2O & ĐIỂM
-                  BÁN HUB XANH
+                  <Network className="h-6 w-6" /> TẦNG 5: ĐIỂM TRƯNG BÀY/HỘI QUÁN
                 </h2>
                 <p className="text-xs text-slate-400 mt-1">
                   Thống kê mạng lưới các điểm Thương mại điện tử O2O, Hub Xanh
@@ -3404,6 +3259,54 @@ export default function App() {
                       gian giao hàng.
                     </p>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'stats-report' && (
+            <div className="bg-[#0A2540] border border-cyan-500/10 rounded-3xl p-6 flex flex-col gap-6 animate-in fade-in duration-300">
+              <div className="border-b border-cyan-500/10 pb-4">
+                <h2 className="text-xl font-black text-cyan-400 flex items-center gap-2">
+                  <Activity className="h-6 w-6" /> THỐNG KÊ BÁO CÁO TỔNG HỢP
+                </h2>
+              </div>
+
+              {/* B1 & B2 Summary */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-[#122A4E]/30 p-5 rounded-2xl border border-cyan-500/10">
+                  <h3 className="text-sm font-bold text-white mb-4">TỔNG HỢP B1 (ĐƠN VỊ KINH DOANH)</h3>
+                  <div className="space-y-2 text-sm text-slate-300">
+                    <p>Tổng số đơn vị: <span className="font-bold text-white">{currentZoneData.b1.total.toLocaleString()}</span></p>
+                    <p>Đã chuyển đổi số: <span className="font-bold text-emerald-400">{(currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds).toLocaleString()}</span></p>
+                  </div>
+                </div>
+                <div className="bg-[#122A4E]/30 p-5 rounded-2xl border border-cyan-500/10">
+                  <h3 className="text-sm font-bold text-white mb-4">TỔNG HỢP B2 (SẢN PHẨM)</h3>
+                  <div className="space-y-2 text-sm text-slate-300">
+                    <p>Tổng sản phẩm/dịch vụ: <span className="font-bold text-white">{currentZoneData.b2.total.toLocaleString()}</span></p>
+                    {/* Dữ liệu lấy từ currentZoneData.b2.ocop_total thay vì activeMetrics */}
+                    <p>Sản phẩm OCOP: <span className="font-bold text-emerald-400">{currentZoneData.b2.ocop_total.toLocaleString()}</span></p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Biểu đồ Doanh thu theo kỳ */}
+              <div className="bg-[#122A4E]/30 p-6 rounded-2xl border border-cyan-500/10">
+                <h3 className="text-sm font-bold text-white mb-6 uppercase">Biểu đồ doanh thu theo các mốc thời gian</h3>
+                <div className="h-64 flex items-end gap-6 pb-2 border-b border-slate-700">
+                  {Object.keys(periodicData).map((period) => {
+                    const rev = periodicData[period].layer1.b3.revenue || 0; 
+                    return (
+                      <div key={period} className="flex flex-col items-center flex-1">
+                        <div 
+                          className="w-12 bg-cyan-500 rounded-t-lg hover:bg-cyan-400 transition-all"
+                          style={{ height: `${rev > 0 ? rev * 10 : 5}px` }}
+                        ></div>
+                        <span className="text-[10px] text-slate-400 mt-2">{period}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
