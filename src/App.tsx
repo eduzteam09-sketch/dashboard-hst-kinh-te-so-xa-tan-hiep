@@ -117,9 +117,9 @@ const INITIAL_PERIODIC_DATA = {
       b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
       b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
       b9: {
-        households: { total: 1100, digitalPay: 850, ecom: 320 },
-        smes: { total: 140, erp: 45, crm: 85, cloud: 110 },
-        large: { total: 10, ai: 3, automation: 6 },
+        households: { total: 0, digitalPay: 0, ecom: 0 },
+        smes: { total: 0, erp: 0, crm: 0, cloud: 0 },
+        large: { total: 0, ai: 0, automation: 0 },
       },
     },
     layer2: {
@@ -190,9 +190,9 @@ const INITIAL_PERIODIC_DATA = {
       b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
       b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
       b9: {
-        households: { total: 1500, digitalPay: 1250, ecom: 450 },
-        smes: { total: 180, erp: 65, crm: 110, cloud: 145 },
-        large: { total: 15, ai: 6, automation: 10 },
+        households: { total: 0, digitalPay: 0, ecom: 0 },
+        smes: { total: 0, erp: 0, crm: 0, cloud: 0 },
+        large: { total: 0, ai: 0, automation: 0 },
       },
     },
     // OFF MẶC ĐỊNH TỪ ĐẦU (ALL ZERO) THEO YÊU CẦU ĐỂ TEST WEB SYNC
@@ -1678,7 +1678,7 @@ export default function App() {
                   <div className="mt-auto">
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-[10px] font-bold text-slate-300 uppercase">
-                        TỈ LỆ DOANH NGHIỆP/ HKD/ HTX SỐ CHUYỂN ĐỔI SỐ:
+                        TỈ LỆ DOANH NGHIỆP/ HKD/ HTX CHUYỂN ĐỔI SỐ:
                       </span>
                       <span className="text-xs font-mono font-bold text-cyan-400">
                         ({currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds}/{currentZoneData.b1.total}) {currentZoneData.b1.total > 0 ? (((currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds) / currentZoneData.b1.total) * 100).toFixed(2) : 0}%
@@ -2354,7 +2354,7 @@ export default function App() {
                 <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between lg:col-span-2">
                   <div className="border-b border-cyan-500/10 pb-3 mb-4 flex items-center justify-between">
                     <span className="text-sm font-bold text-cyan-400 flex items-center gap-2">
-                      <Compass className="h-5 w-5" /> B9. CĐS DOANH NGHIỆP TỔNG HỢP
+                      <Compass className="h-5 w-5" /> B9. CĐS DOANH NGHIỆP TOÀN DIỆN
                     </span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
