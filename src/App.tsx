@@ -373,9 +373,9 @@ const COMMUNE_DATA = {
   },
   'X. Tân Hiệp': {
     b1: {
-      total: 73,
-      dn_total: 63,
-      hkd_total: 2,
+      total: 102,
+      dn_total: 89,
+      hkd_total: 5,
       htx_total: 8,
       dn_cds: 3,
       hkd_cds: 0,
