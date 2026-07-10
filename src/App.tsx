@@ -1042,7 +1042,7 @@ export default function App() {
     setPdfErrorMsg(null);
     setPdfLogs((prev) => [
       ...prev,
-      '[API] Đang gửi yêu cầu phân tích tài liệu bằng LLM Gemini (gemini-2.5-flash)...',
+      '[API] Đang gửi yêu cầu phân tích tài liệu bằng LLM Gemini (gemini-3.1-flash-lite)...',
     ]);
 
     try {
@@ -1076,7 +1076,7 @@ export default function App() {
         generationConfig: { responseMimeType: 'application/json' },
       };
 
-      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
+      const response = await requestGemini('gemini-3.1-flash-lite', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1271,7 +1271,7 @@ export default function App() {
       return;
     }
     setIsPlayingBriefing(true);
-    triggerToast('Đang kết nối Google Gemini TTS (gemini-2.5-flash-preview-tts)...');
+    triggerToast('Đang kết nối Google Gemini TTS (gemini-3.1-flash-tts-preview)...');
     const cleanedText = textToSpeak.replace(/[#*`_-]/g, '').substring(0, 250);
     const payload = {
       contents: [
@@ -1290,7 +1290,7 @@ export default function App() {
     };
 
     try {
-      const response = await requestGemini('gemini-2.5-flash-preview-tts', 'generateContent', payload);
+      const response = await requestGemini('gemini-3.1-flash-tts-preview', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1321,12 +1321,12 @@ export default function App() {
   const handleDeepScan = async () => {
     setAiIsLoading(true);
     setDeepScanResult('');
-    triggerToast('Đang quét toàn diện song song Layer 1 & 2 (gemini-2.5-flash)...');
+    triggerToast('Đang quét toàn diện song song Layer 1 & 2 (gemini-3.1-flash-lite)...');
     const promptText = `Phân tích mâu thuẫn hệ thống: Tầng 1 (Hộ KD cá thể số hóa 38%) vs Tầng 2 (Khóa đào tạo = ${activeMetrics.layer2.nhomC.trainingCourses.year}). Nêu 3 khuyến nghị ngắn gọn.`;
     const payload = { contents: [{ parts: [{ text: promptText }] }] };
 
     try {
-      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
+      const response = await requestGemini('gemini-3.1-flash-lite', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1359,7 +1359,7 @@ export default function App() {
       ],
     };
     try {
-      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
+      const response = await requestGemini('gemini-3.1-flash-lite', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1431,8 +1431,7 @@ export default function App() {
               onChange={(e) => {
                 setSelectedPeriod(e.target.value);
                 triggerToast(
-                  `Đồng bộ dữ liệu chu kỳ ${
-                    periodicData[e.target.value]?.label
+                  `Đồng bộ dữ liệu chu kỳ ${periodicData[e.target.value]?.label
                   }`
                 );
               }}
@@ -1545,18 +1544,16 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={handleClick}
-                className={`w-full flex flex-col items-start px-4 py-3 rounded-xl transition-all text-left ${
-                  isActive
-                    ? 'bg-[#122A4E] border-l-4 border-cyan-400 text-cyan-200 font-bold'
-                    : 'text-slate-300 hover:bg-[#122A4E]/20 hover:text-white'
-                }`}
+                className={`w-full flex flex-col items-start px-4 py-3 rounded-xl transition-all text-left ${isActive
+                  ? 'bg-[#122A4E] border-l-4 border-cyan-400 text-cyan-200 font-bold'
+                  : 'text-slate-300 hover:bg-[#122A4E]/20 hover:text-white'
+                  }`}
               >
                 <div className="w-full flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <IconComponent
-                      className={`h-4.5 w-4.5 ${
-                        isActive ? 'text-cyan-400' : 'text-slate-400'
-                      }`}
+                      className={`h-4.5 w-4.5 ${isActive ? 'text-cyan-400' : 'text-slate-400'
+                        }`}
                     />
                     <span className="text-sm font-semibold">{item.label}</span>
                   </div>
@@ -1618,9 +1615,9 @@ export default function App() {
                   </div>
 
                   {/* Tổng số DN/HKD/HTX (Có Link) */}
-                  <a 
-                    href="https://tanhiepangiang.vn/28C70aH88eC9063" 
-                    target="_blank" 
+                  <a
+                    href="https://tanhiepangiang.vn/28C70aH88eC9063"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="bg-[#07111F]/50 px-5 py-3 rounded-xl border border-cyan-500/10 flex justify-between items-center mb-3 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
                   >
@@ -1634,9 +1631,9 @@ export default function App() {
 
                   {/* 3 Cột Tổng (Có Link) */}
                   <div className="grid grid-cols-3 gap-2 mb-6 text-center">
-                    <a 
-                      href="https://tanhiepangiang.vn/330887F70hF9E63" 
-                      target="_blank" 
+                    <a
+                      href="https://tanhiepangiang.vn/330887F70hF9E63"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
                     >
@@ -1647,10 +1644,10 @@ export default function App() {
                         {currentZoneData.b1.dn_total}
                       </strong>
                     </a>
-                    
-                    <a 
-                      href="https://tanhiepangiang.vn/C0EcH948862e780" 
-                      target="_blank" 
+
+                    <a
+                      href="https://tanhiepangiang.vn/C0EcH948862e780"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
                     >
@@ -1661,10 +1658,10 @@ export default function App() {
                         {currentZoneData.b1.hkd_total}
                       </strong>
                     </a>
-                    
-                    <a 
-                      href="https://tanhiepangiang.vn/0846B862H659B5E" 
-                      target="_blank" 
+
+                    <a
+                      href="https://tanhiepangiang.vn/0846B862H659B5E"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#122A4E]/20 p-3 rounded-xl border border-cyan-500/10 block cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/40 transition-all"
                     >
@@ -1678,9 +1675,9 @@ export default function App() {
                   </div>
 
                   {/* Tổng số CĐS */}
-                  <a 
-                    href="https://tanhiepangiang.vn/3e6h8527Eb344b3" 
-                    target="_blank" 
+                  <a
+                    href="https://tanhiepangiang.vn/3e6h8527Eb344b3"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="bg-[#07111F]/50 px-5 py-3 rounded-xl border border-cyan-500/10 flex justify-between items-center mb-3 cursor-pointer hover:border-cyan-400 hover:bg-[#122A4E]/30 transition-all"
                   >
@@ -1739,54 +1736,54 @@ export default function App() {
                         ({currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds}/{currentZoneData.b1.total}) {currentZoneData.b1.total > 0 ? (((currentZoneData.b1.dn_cds + currentZoneData.b1.hkd_cds + currentZoneData.b1.htx_cds) / currentZoneData.b1.total) * 100).toFixed(2) : 0}%
                       </span>
                     </div>
-                    
+
                     <div className="space-y-3 border-b border-cyan-500/10 pb-5 mb-4">
                       {/* Bar DN */}
                       <div className="flex items-center gap-2">
                         <span className="text-[8px] w-8 text-slate-400">DN/VN</span>
                         <div className="flex-1 flex items-center h-6">
-                           {currentZoneData.b1.dn_total > 0 && (
-                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.dn_total}
-                             </div>
-                           )}
-                           {currentZoneData.b1.dn_cds > 0 && (
-                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_cds / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.dn_cds}
-                             </div>
-                           )}
+                          {currentZoneData.b1.dn_total > 0 && (
+                            <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.dn_total}
+                            </div>
+                          )}
+                          {currentZoneData.b1.dn_cds > 0 && (
+                            <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.dn_cds / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.dn_cds}
+                            </div>
+                          )}
                         </div>
                       </div>
                       {/* Bar HKD */}
                       <div className="flex items-center gap-2">
                         <span className="text-[8px] w-8 text-slate-400">HKD</span>
                         <div className="flex-1 flex items-center h-6">
-                           {currentZoneData.b1.hkd_total > 0 && (
-                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.hkd_total}
-                             </div>
-                           )}
-                           {currentZoneData.b1.hkd_cds > 0 && (
-                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_cds / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.hkd_cds}
-                             </div>
-                           )}
+                          {currentZoneData.b1.hkd_total > 0 && (
+                            <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.hkd_total}
+                            </div>
+                          )}
+                          {currentZoneData.b1.hkd_cds > 0 && (
+                            <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.hkd_cds / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.hkd_cds}
+                            </div>
+                          )}
                         </div>
                       </div>
                       {/* Bar HTX */}
                       <div className="flex items-center gap-2">
                         <span className="text-[8px] w-8 text-slate-400">HTX</span>
                         <div className="flex-1 flex items-center h-6">
-                           {currentZoneData.b1.htx_total > 0 && (
-                             <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.htx_total}
-                             </div>
-                           )}
-                           {currentZoneData.b1.htx_cds > 0 && (
-                             <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_cds / currentZoneData.b1.total) * 100}%` }}>
-                               {currentZoneData.b1.htx_cds}
-                             </div>
-                           )}
+                          {currentZoneData.b1.htx_total > 0 && (
+                            <div className="h-full bg-[#86EFAC] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.htx_total}
+                            </div>
+                          )}
+                          {currentZoneData.b1.htx_cds > 0 && (
+                            <div className="h-full bg-[#FB923C] flex items-center justify-center text-[9px] text-slate-900 font-bold" style={{ width: `${(currentZoneData.b1.htx_cds / currentZoneData.b1.total) * 100}%` }}>
+                              {currentZoneData.b1.htx_cds}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1796,21 +1793,21 @@ export default function App() {
                       BIỂU ĐỒ TỈ LỆ CƠ CẤU ĐƠN VỊ KINH DOANH:
                     </span>
                     <div className="w-full h-7 bg-[#07111F] flex mb-2">
-                       {currentZoneData.b1.dn_total > 0 && (
-                          <div className="bg-cyan-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
-                            DN ({(currentZoneData.b1.dn_total / currentZoneData.b1.total * 100).toFixed(0)}%)
-                          </div>
-                       )}
-                       {currentZoneData.b1.hkd_total > 0 && (
-                          <div className="bg-emerald-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
-                            HKD ({(currentZoneData.b1.hkd_total / currentZoneData.b1.total * 100).toFixed(0)}%)
-                          </div>
-                       )}
-                       {currentZoneData.b1.htx_total > 0 && (
-                          <div className="bg-[#A855F7] h-full flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
-                            HTX ({(currentZoneData.b1.htx_total / currentZoneData.b1.total * 100).toFixed(0)}%)
-                          </div>
-                       )}
+                      {currentZoneData.b1.dn_total > 0 && (
+                        <div className="bg-cyan-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.dn_total / currentZoneData.b1.total) * 100}%` }}>
+                          DN ({(currentZoneData.b1.dn_total / currentZoneData.b1.total * 100).toFixed(0)}%)
+                        </div>
+                      )}
+                      {currentZoneData.b1.hkd_total > 0 && (
+                        <div className="bg-emerald-400 h-full flex items-center justify-center text-[10px] font-bold text-slate-900" style={{ width: `${(currentZoneData.b1.hkd_total / currentZoneData.b1.total) * 100}%` }}>
+                          HKD ({(currentZoneData.b1.hkd_total / currentZoneData.b1.total * 100).toFixed(0)}%)
+                        </div>
+                      )}
+                      {currentZoneData.b1.htx_total > 0 && (
+                        <div className="bg-[#A855F7] h-full flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${(currentZoneData.b1.htx_total / currentZoneData.b1.total) * 100}%` }}>
+                          HTX ({(currentZoneData.b1.htx_total / currentZoneData.b1.total * 100).toFixed(0)}%)
+                        </div>
+                      )}
                     </div>
                     <div className="flex items-center justify-center gap-4">
                       <div className="flex items-center gap-1.5">
@@ -1839,7 +1836,7 @@ export default function App() {
                   </div>
 
                   {/* Tổng số SP/DV (Có Link) */}
-                  <a 
+                  <a
                     href="https://tanhiepangiang.vn/B4HbFf11820eB5C"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -1858,7 +1855,7 @@ export default function App() {
                     {/* Khối OCOP - Chiếm full chiều ngang */}
                     <div className="bg-[#122A4E]/30 rounded-xl border border-cyan-500/10 p-5 w-full">
                       {/* Tiêu đề & Tổng số */}
-                      <a 
+                      <a
                         href="https://tanhiepangiang.vn/8d2h87Bf66915e4"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1867,7 +1864,7 @@ export default function App() {
                         <span className="text-sm text-slate-300 uppercase block mb-1 tracking-wider">TỔNG SỐ SẢN PHẨM OCOP</span>
                         <strong className="text-5xl font-black font-mono text-emerald-400">{currentZoneData.b2.ocop_total}</strong>
                       </a>
-                      
+
                       {/* Thanh tiến độ */}
                       <div className="w-full h-4 bg-[#07111F] rounded-full overflow-hidden mb-2 flex">
                         {currentZoneData.b2.ocop_total > 0 && (
@@ -1878,7 +1875,7 @@ export default function App() {
                           </>
                         )}
                       </div>
-                      
+
                       {/* Chú thích màu */}
                       <div className="flex items-center justify-center gap-6 mb-6">
                         <div className="flex items-center gap-2"><span className="w-3 h-3 bg-[#60A5FA] rounded-full"></span><span className="text-xs text-slate-300">OCOP 3 SAO</span></div>
@@ -1921,7 +1918,7 @@ export default function App() {
                     <span className="text-xs font-bold text-slate-300 uppercase block mb-6">
                       TỈ LỆ CÁC LOẠI SẢN PHẨM
                     </span>
-                    
+
                     <div className="flex justify-center relative pb-4">
                       {/* Vòng Donut bằng CSS */}
                       {(() => {
@@ -1929,11 +1926,11 @@ export default function App() {
                         const p_ocop = (currentZoneData.b2.ocop_total / total) * 100;
                         const p_thuong = (currentZoneData.b2.sp_thuong / total) * 100;
                         const p_dv = (currentZoneData.b2.dv / total) * 100;
-                        
+
                         return (
                           <div className="relative w-40 h-40">
                             {/* Conic gradient background */}
-                            <div 
+                            <div
                               className="w-full h-full rounded-full"
                               style={{
                                 background: `conic-gradient(
@@ -1945,7 +1942,7 @@ export default function App() {
                             ></div>
                             {/* Inner circle cut out */}
                             <div className="absolute inset-0 m-auto w-20 h-20 bg-[#0A2540] rounded-full"></div>
-                            
+
                             {/* Labels positioned absolutely */}
                             <div className="absolute top-0 -right-16 text-[9px] text-slate-300 flex flex-col items-center">
                               <span className="uppercase">Sản Phẩm OCOP</span>
@@ -2196,7 +2193,7 @@ export default function App() {
                 {/* B6. DU LỊCH */}
                 <div className="bg-[#0A2540] border border-cyan-500/15 rounded-3xl p-5 flex flex-col justify-between">
                   <div className="border-b border-cyan-500/10 pb-3 mb-4 flex items-center justify-between">
-                    <a 
+                    <a
                       href="https://tanhiepangiang.vn/8fBhB2Ff059dA08"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -2473,11 +2470,10 @@ export default function App() {
                     <button
                       key={sub.id}
                       onClick={() => setActiveSubAE(sub.id)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                        activeSubAE === sub.id
-                          ? 'bg-emerald-500 text-slate-900'
-                          : 'text-slate-300 hover:text-white'
-                      }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${activeSubAE === sub.id
+                        ? 'bg-emerald-500 text-slate-900'
+                        : 'text-slate-300 hover:text-white'
+                        }`}
                     >
                       {sub.label}
                     </button>
@@ -2578,19 +2574,18 @@ export default function App() {
 
                   <div
                     onClick={() => setActiveSubAE('C')}
-                    className={`bg-[#122A4E]/30 p-4 rounded-xl border ${
-                      activeMetrics.layer2.nhomC.trainingCourses.year === 0
-                        ? 'border-rose-500/30'
-                        : 'border-cyan-500/10'
-                    } hover:bg-[#122A4E]/60 cursor-pointer transition-all flex flex-col justify-between h-full group`}
+                    className={`bg-[#122A4E]/30 p-4 rounded-xl border ${activeMetrics.layer2.nhomC.trainingCourses.year === 0
+                      ? 'border-rose-500/30'
+                      : 'border-cyan-500/10'
+                      } hover:bg-[#122A4E]/60 cursor-pointer transition-all flex flex-col justify-between h-full group`}
                   >
                     <div>
                       <span className="text-xs font-black text-white block mb-3 pb-2 border-b border-cyan-500/20 flex items-center gap-1.5">
                         C. VẬN HÀNH & NGUỒN LỰC{' '}
                         {activeMetrics.layer2.nhomC.trainingCourses.year ===
                           0 && (
-                          <AlertTriangle className="h-3.5 w-3.5 text-rose-500" />
-                        )}
+                            <AlertTriangle className="h-3.5 w-3.5 text-rose-500" />
+                          )}
                       </span>
                       <div className="space-y-2.5 text-[11px]">
                         <div className="flex justify-between items-center text-slate-300">
@@ -2614,12 +2609,11 @@ export default function App() {
                         <div className="flex justify-between items-center text-slate-300">
                           <span>Khóa đào tạo:</span>{' '}
                           <span
-                            className={`font-mono font-bold ${
-                              activeMetrics.layer2.nhomC.trainingCourses
-                                .year === 0
-                                ? 'text-rose-400 animate-pulse'
-                                : 'text-emerald-400'
-                            }`}
+                            className={`font-mono font-bold ${activeMetrics.layer2.nhomC.trainingCourses
+                              .year === 0
+                              ? 'text-rose-400 animate-pulse'
+                              : 'text-emerald-400'
+                              }`}
                           >
                             {activeMetrics.layer2.nhomC.trainingCourses.year}{' '}
                             <span className="text-[9px] font-normal">
@@ -3041,7 +3035,7 @@ export default function App() {
                   Thông tin các dự án kêu gọi đầu tư và thông tin quy hoạch tại địa phương
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Biểu đồ 1: Dự án kêu gọi đầu tư */}
                 <a
@@ -3064,8 +3058,8 @@ export default function App() {
                         { val: activeMetrics.layer3.investmentProjects.total, color: 'bg-[#FDE047]' },
                       ].map((item, idx) => (
                         <div key={idx} className="w-full flex items-center h-8">
-                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`} 
-                              style={{ width: `${activeMetrics.layer3.investmentProjects.total > 0 ? (item.val / activeMetrics.layer3.investmentProjects.total) * 100 : 0}%` }}>
+                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`}
+                            style={{ width: `${activeMetrics.layer3.investmentProjects.total > 0 ? (item.val / activeMetrics.layer3.investmentProjects.total) * 100 : 0}%` }}>
                             {item.val > 0 ? item.val : ""}
                           </div>
                         </div>
@@ -3095,8 +3089,8 @@ export default function App() {
                         { val: activeMetrics.layer3.planningInfo.total, color: 'bg-[#FDE047]' },
                       ].map((item, idx) => (
                         <div key={idx} className="w-full flex items-center h-8">
-                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`} 
-                              style={{ width: `${activeMetrics.layer3.planningInfo.total > 0 ? (item.val / activeMetrics.layer3.planningInfo.total) * 100 : 0}%` }}>
+                          <div className={`h-full ${item.color} rounded-r-sm flex items-center justify-end pr-2 text-slate-900 font-medium text-sm transition-all duration-500`}
+                            style={{ width: `${activeMetrics.layer3.planningInfo.total > 0 ? (item.val / activeMetrics.layer3.planningInfo.total) * 100 : 0}%` }}>
                             {item.val > 0 ? item.val : ""}
                           </div>
                         </div>
@@ -3323,10 +3317,10 @@ export default function App() {
                 <h3 className="text-sm font-bold text-white mb-6 uppercase">Biểu đồ doanh thu theo các mốc thời gian</h3>
                 <div className="h-64 flex items-end gap-6 pb-2 border-b border-slate-700">
                   {Object.keys(periodicData).map((period) => {
-                    const rev = periodicData[period].layer1.b3.revenue || 0; 
+                    const rev = periodicData[period].layer1.b3.revenue || 0;
                     return (
                       <div key={period} className="flex flex-col items-center flex-1">
-                        <div 
+                        <div
                           className="w-12 bg-cyan-500 rounded-t-lg hover:bg-cyan-400 transition-all"
                           style={{ height: `${rev > 0 ? rev * 10 : 5}px` }}
                         ></div>
@@ -3348,12 +3342,12 @@ export default function App() {
                     <Bot className="h-6 w-6 text-cyan-400" /> AI COMMAND CENTER
                   </h2>
                   <p className="text-xs text-slate-300">
-                    Sử dụng mo hình ngôn ngữ lớn **Gemini-2.5-Flash** để tự động
+                    Sử dụng mô hình ngôn ngữ lớn **Gemini-3.1-Flash-Lite** để tự động
                     đối chứng.
                   </p>
                 </div>
                 <span className="bg-purple-950/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30">
-                  gemini-2.5-flash-preview-09-2025
+                  gemini-3.1-flash-lite
                 </span>
               </div>
 
@@ -3425,9 +3419,8 @@ export default function App() {
                     {aiChatHistory.map((msg, index) => (
                       <div
                         key={index}
-                        className={`flex items-start gap-2.5 ${
-                          msg.role === 'user' ? 'justify-end' : ''
-                        }`}
+                        className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'justify-end' : ''
+                          }`}
                       >
                         {msg.role !== 'user' && (
                           <div className="bg-cyan-500 text-slate-900 p-1.5 rounded-lg shrink-0">
@@ -3435,19 +3428,17 @@ export default function App() {
                           </div>
                         )}
                         <div
-                          className={`max-w-[85%] rounded-2xl p-3 text-xs ${
-                            msg.role === 'user'
-                              ? 'bg-cyan-500 text-slate-900 font-bold rounded-tr-none'
-                              : 'bg-[#122A4E]/50 text-slate-100 border border-cyan-500/10 rounded-tl-none leading-relaxed'
-                          }`}
+                          className={`max-w-[85%] rounded-2xl p-3 text-xs ${msg.role === 'user'
+                            ? 'bg-cyan-500 text-slate-900 font-bold rounded-tr-none'
+                            : 'bg-[#122A4E]/50 text-slate-100 border border-cyan-500/10 rounded-tl-none leading-relaxed'
+                            }`}
                         >
                           <p className="whitespace-pre-wrap">{msg.text}</p>
                           <span
-                            className={`block text-[9px] mt-1.5 text-right ${
-                              msg.role === 'user'
-                                ? 'text-slate-700'
-                                : 'text-slate-400'
-                            }`}
+                            className={`block text-[9px] mt-1.5 text-right ${msg.role === 'user'
+                              ? 'text-slate-700'
+                              : 'text-slate-400'
+                              }`}
                           >
                             {msg.timestamp}
                           </span>
@@ -3585,15 +3576,14 @@ export default function App() {
                 {pdfLogs.map((log, idx) => (
                   <div
                     key={idx}
-                    className={`${
-                      log.includes('[SUCCESS]') || log.includes('[OK]')
-                        ? 'text-emerald-400'
-                        : log.includes('[API]')
+                    className={`${log.includes('[SUCCESS]') || log.includes('[OK]')
+                      ? 'text-emerald-400'
+                      : log.includes('[API]')
                         ? 'text-cyan-300'
                         : log.includes('[WARN]')
-                        ? 'text-amber-400'
-                        : 'text-slate-300'
-                    }`}
+                          ? 'text-amber-400'
+                          : 'text-slate-300'
+                      }`}
                   >
                     {log}
                   </div>
