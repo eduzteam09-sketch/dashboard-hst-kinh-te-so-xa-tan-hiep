@@ -51,6 +51,8 @@ import {
   Network,
 } from 'lucide-react';
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+
 // Static Zone Coordinates & Info
 const ZONES = [
   {
@@ -997,12 +999,12 @@ export default function App() {
     setIsExtractingPdf(true);
     setPdfLogs((prev) => [
       ...prev,
-      '[API] Đang gửi yêu cầu phân tích tài liệu bằng LLM Gemini...',
+      '[API] Đang gửi yêu cầu phân tích tài liệu bằng LLM Gemini (gemini-2.5-flash)...',
     ]);
 
     try {
-      const apiKey = '';
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+      const apiKey = GEMINI_API_KEY;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
       const promptText = `
         Bạn là hệ thống trích xuất dữ liệu. Hãy đọc tài liệu PDF này và trích xuất số liệu chuyển đổi số.
@@ -1039,7 +1041,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!response.ok) throw new Error('API Request failed');
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `HTTP ${response.status}`);
+      }
 
       const result = await response.json();
       const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -1054,10 +1059,11 @@ export default function App() {
       } else {
         throw new Error('Empty response');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setPdfLogs((prev) => [
         ...prev,
+        `[ERROR] Chi tiết lỗi: ${error.message || error}`,
         '[WARN] PDF chưa được hỗ trợ tốt hoặc lỗi mạng. Kích hoạt thuật toán trích xuất AI mẫu (Fallback)...',
       ]);
       // Fallback mô phỏng trích xuất khi API gặp lỗi đọc file PDF nội tuyến
@@ -1216,8 +1222,8 @@ export default function App() {
       return;
     }
     setIsPlayingBriefing(true);
-    triggerToast('Đang kết nối Google Gemini TTS...');
-    const apiKey = '';
+    triggerToast('Đang kết nối Google Gemini TTS (gemini-2.5-flash-preview-tts)...');
+    const apiKey = GEMINI_API_KEY;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
     const cleanedText = textToSpeak.replace(/[#*`_-]/g, '').substring(0, 250);
     const payload = {
@@ -1242,7 +1248,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!response.ok) throw new Error('TTS API Error');
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `HTTP ${response.status}`);
+      }
       const result = await response.json();
       const inlineData = result.candidates?.[0]?.content?.parts?.find(
         (p) => p.inlineData
@@ -1269,9 +1278,9 @@ export default function App() {
   const handleDeepScan = async () => {
     setAiIsLoading(true);
     setDeepScanResult('');
-    triggerToast('Đang quét toàn diện song song Layer 1 & 2...');
-    const apiKey = '';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    triggerToast('Đang quét toàn diện song song Layer 1 & 2 (gemini-2.5-flash)...');
+    const apiKey = GEMINI_API_KEY;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const promptText = `Phân tích mâu thuẫn hệ thống: Tầng 1 (Hộ KD cá thể số hóa 38%) vs Tầng 2 (Khóa đào tạo = ${activeMetrics.layer2.nhomC.trainingCourses.year}). Nêu 3 khuyến nghị ngắn gọn.`;
     const payload = { contents: [{ parts: [{ text: promptText }] }] };
 
@@ -1281,6 +1290,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `HTTP ${response.status}`);
+      }
       const json = await response.json();
       setDeepScanResult(
         json.candidates?.[0]?.content?.parts?.[0]?.text || 'Lỗi đọc AI'
@@ -1297,8 +1310,8 @@ export default function App() {
   const handleGeneratePolicy = async () => {
     setIsGeneratingPolicy(true);
     setGeneratedIssuePolicy('');
-    const apiKey = '';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    const apiKey = GEMINI_API_KEY;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const payload = {
       contents: [
         {
@@ -1316,6 +1329,10 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `HTTP ${response.status}`);
+      }
       const data = await response.json();
       setGeneratedIssuePolicy(
         data.candidates?.[0]?.content?.parts?.[0]?.text || 'Lỗi AI'
