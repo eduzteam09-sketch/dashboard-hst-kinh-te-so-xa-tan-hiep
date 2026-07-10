@@ -7,6 +7,35 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
+## Getting Started
+
+To run this project locally, follow these steps:
+
+### 1. Install dependencies
+```bash
+npm install
+```
+
+### 2. Configure Environment Variables
+Copy the `.env.example` file to `.env` in the root directory:
+```bash
+cp .env.example .env
+```
+Open the `.env` file and enter your Google Gemini API Key:
+```env
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 3. Run the Development Server
+```bash
+npm run dev
+```
+
+### 4. Build for Production
+```bash
+npm run build
+```
+
 ## React Compiler
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).

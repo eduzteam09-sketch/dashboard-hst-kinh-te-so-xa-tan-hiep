@@ -955,6 +955,7 @@ export default function App() {
   const [isExtractingPdf, setIsExtractingPdf] = useState(false);
   const [pdfLogs, setPdfLogs] = useState([]);
   const [extractedPdfData, setExtractedPdfData] = useState(null);
+  const [pdfErrorMsg, setPdfErrorMsg] = useState(null);
 
   const [selectedIssue, setSelectedIssue] = useState('nhom-c-training');
   const [generatedPolicy, setGeneratedIssuePolicy] = useState('');
@@ -1012,6 +1013,7 @@ export default function App() {
         '[INFO] Sẵn sàng phân tích dữ liệu Nhóm A-E...',
       ]);
       setExtractedPdfData(null); // Xóa dữ liệu cũ nếu chọn file mới
+      setPdfErrorMsg(null); // Xóa lỗi cũ
     };
     reader.readAsDataURL(file);
   };
@@ -1019,6 +1021,7 @@ export default function App() {
   const handleExtractPdf = async () => {
     if (!pdfFile) return;
     setIsExtractingPdf(true);
+    setPdfErrorMsg(null);
     setPdfLogs((prev) => [
       ...prev,
       '[API] Đang gửi yêu cầu phân tích tài liệu bằng LLM Gemini (gemini-2.5-flash)...',
@@ -1083,59 +1086,70 @@ export default function App() {
       }
     } catch (error: any) {
       console.error(error);
+      const errMsg = error.message || error;
       setPdfLogs((prev) => [
         ...prev,
-        `[ERROR] Chi tiết lỗi: ${error.message || error}`,
-        '[WARN] PDF chưa được hỗ trợ tốt hoặc lỗi mạng. Kích hoạt thuật toán trích xuất AI mẫu (Fallback)...',
+        `[ERROR] Chi tiết lỗi: ${errMsg}`,
+        '[WARN] Trích xuất thất bại. Vui lòng chọn Thử lại hoặc Sử dụng dữ liệu mẫu.',
       ]);
-      // Fallback mô phỏng trích xuất khi API gặp lỗi đọc file PDF nội tuyến
-      setTimeout(() => {
-        const mockExtractedData = {
-          nhomA: {
-            digitalEnterprises: { month: 15, year: 120 },
-            cloudEnterprises: { month: 4, year: 8 },
-            comprehensiveDigital: { month: 2, year: 5 },
-            netIdCards: { month: 80, year: 350 },
-          },
-          nhomB: {
-            webEcom: { month: 8, year: 35 },
-            digitalProducts: { month: 4, year: 12 },
-            ecomOrders: { month: 600, year: 4500 },
-            growthRate: { month: 3, year: 20 },
-          },
-          nhomC: {
-            erpSystems: { month: 2, year: 6 },
-            totalPersonnel: { month: 150, year: 5200 },
-            trainingCourses: { month: 5, year: 22 },
-          },
-          nhomD: {
-            pageViews: { month: 8500, year: 68000 },
-            viewers: { month: 1200, year: 9500 },
-            googleSeo: { month: 180000, year: 2100000 },
-            customers: { month: 450, year: 4200 },
-            revenue: { month: 12.5, year: 135 },
-          },
-          nhomE: {
-            enterprises: { month: 20, year: 280 },
-            charityProjects: { month: 3, year: 18 },
-            boardNews: { month: 25, year: 210 },
-            projects: { month: 2, year: 12 },
-            investmentCalls: { month: 3, year: 15 },
-            tourismLocations: { month: 1, year: 8 },
-            featuredEvents: { month: 3, year: 12 },
-            digitalTransformations: { month: 2, year: 10 },
-            libraryDocs: { month: 15, year: 65 },
-          },
-        };
-        setPdfLogs((prev) => [
-          ...prev,
-          '[SUCCESS] Hoàn tất nhận diện! Vui lòng kiểm tra bảng xem trước bên dưới và xác nhận nạp.',
-        ]);
-        setExtractedPdfData(mockExtractedData); // Lưu vào state tạm để xem trước
-      }, 2000);
+      setPdfErrorMsg(errMsg);
     } finally {
       setIsExtractingPdf(false);
     }
+  };
+
+  const handleLoadMockData = () => {
+    setIsExtractingPdf(true);
+    setPdfLogs((prev) => [
+      ...prev,
+      '[INFO] Đang nạp dữ liệu mẫu giả lập...',
+    ]);
+    const mockExtractedData = {
+      nhomA: {
+        digitalEnterprises: { month: 15, year: 120 },
+        cloudEnterprises: { month: 4, year: 8 },
+        comprehensiveDigital: { month: 2, year: 5 },
+        netIdCards: { month: 80, year: 350 },
+      },
+      nhomB: {
+        webEcom: { month: 8, year: 35 },
+        digitalProducts: { month: 4, year: 12 },
+        ecomOrders: { month: 600, year: 4500 },
+        growthRate: { month: 3, year: 20 },
+      },
+      nhomC: {
+        erpSystems: { month: 2, year: 6 },
+        totalPersonnel: { month: 150, year: 5200 },
+        trainingCourses: { month: 5, year: 22 },
+      },
+      nhomD: {
+        pageViews: { month: 8500, year: 68000 },
+        viewers: { month: 1200, year: 9500 },
+        googleSeo: { month: 180000, year: 2100000 },
+        customers: { month: 450, year: 4200 },
+        revenue: { month: 12.5, year: 135 },
+      },
+      nhomE: {
+        enterprises: { month: 20, year: 280 },
+        charityProjects: { month: 3, year: 18 },
+        boardNews: { month: 25, year: 210 },
+        projects: { month: 2, year: 12 },
+        investmentCalls: { month: 3, year: 15 },
+        tourismLocations: { month: 1, year: 8 },
+        featuredEvents: { month: 3, year: 12 },
+        digitalTransformations: { month: 2, year: 10 },
+        libraryDocs: { month: 15, year: 65 },
+      },
+    };
+    setTimeout(() => {
+      setPdfLogs((prev) => [
+        ...prev,
+        '[SUCCESS] Đã nạp dữ liệu mẫu thành công! Vui lòng kiểm tra bản xem trước bên dưới và xác nhận nạp.',
+      ]);
+      setExtractedPdfData(mockExtractedData);
+      setPdfErrorMsg(null);
+      setIsExtractingPdf(false);
+    }, 1000);
   };
 
   const handleApplyPdfData = () => {
@@ -1153,6 +1167,7 @@ export default function App() {
     setPdfFile(null);
     setPdfLogs([]);
     setExtractedPdfData(null);
+    setPdfErrorMsg(null);
   };
 
   const resetPdfModal = () => {
@@ -1160,6 +1175,7 @@ export default function App() {
     setPdfFile(null);
     setPdfLogs([]);
     setExtractedPdfData(null);
+    setPdfErrorMsg(null);
   };
 
   const callGeminiAPI = (query) => {
@@ -3595,6 +3611,38 @@ export default function App() {
                   </div>
                 )}
               </div>
+
+              {/* Alert Lỗi & Lựa chọn Fallback */}
+              {pdfErrorMsg && (
+                <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-xl space-y-3 animate-in fade-in-50 duration-200">
+                  <div className="flex items-start gap-2.5">
+                    <AlertTriangle className="h-5 w-5 text-rose-400 shrink-0 mt-0.5" />
+                    <div>
+                      <h5 className="text-xs font-bold text-rose-400 uppercase">Lỗi Kết Nối Hoặc API</h5>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">
+                        Hệ thống gặp sự cố khi gọi API Gemini: <span className="font-mono text-rose-300 break-all">{pdfErrorMsg}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2.5 justify-end">
+                    <button
+                      onClick={handleExtractPdf}
+                      disabled={isExtractingPdf}
+                      className="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1"
+                    >
+                      <RefreshCw className={`h-3 w-3 ${isExtractingPdf ? 'animate-spin' : ''}`} />
+                      Thử Lại
+                    </button>
+                    <button
+                      onClick={handleLoadMockData}
+                      disabled={isExtractingPdf}
+                      className="py-1.5 px-3 bg-emerald-500 hover:bg-emerald-600 text-slate-900 rounded-lg text-xs font-bold transition-all"
+                    >
+                      Sử Dụng Dữ Liệu Mẫu
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Khung Xem Trước Dữ Liệu (Preview Data) */}
               {extractedPdfData && (
