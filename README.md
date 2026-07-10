@@ -59,3 +59,14 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Deploying to Vercel
+
+When deploying this project to Vercel, the Google Gemini API Key must be securely configured on the server-side to prevent exposing it to the browser:
+
+1. **Do NOT configure `VITE_GEMINI_API_KEY` on Vercel.** Keeping it unconfigured tells the React frontend to route requests through the secure proxy serverless function.
+2. In the Vercel Dashboard, go to your project **Settings** -> **Environment Variables**.
+3. Add a new environment variable:
+   - **Key:** `GEMINI_API_KEY`
+   - **Value:** Your Google Gemini API Key.
+

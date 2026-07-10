@@ -53,6 +53,24 @@ import {
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 
+const requestGemini = async (model: string, action: string, payload: any) => {
+  const apiKey = GEMINI_API_KEY;
+  if (apiKey) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:${action}?key=${apiKey}`;
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } else {
+    return fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model, action, payload }),
+    });
+  }
+};
+
 // Static Zone Coordinates & Info
 const ZONES = [
   {
@@ -1028,9 +1046,6 @@ export default function App() {
     ]);
 
     try {
-      const apiKey = GEMINI_API_KEY;
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
       const promptText = `
         Bạn là hệ thống trích xuất dữ liệu. Hãy đọc tài liệu PDF này và trích xuất số liệu chuyển đổi số.
         Chỉ trích xuất dữ liệu cho 5 nhóm A, B, C, D, E.
@@ -1061,11 +1076,7 @@ export default function App() {
         generationConfig: { responseMimeType: 'application/json' },
       };
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1261,8 +1272,6 @@ export default function App() {
     }
     setIsPlayingBriefing(true);
     triggerToast('Đang kết nối Google Gemini TTS (gemini-2.5-flash-preview-tts)...');
-    const apiKey = GEMINI_API_KEY;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
     const cleanedText = textToSpeak.replace(/[#*`_-]/g, '').substring(0, 250);
     const payload = {
       contents: [
@@ -1281,11 +1290,7 @@ export default function App() {
     };
 
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await requestGemini('gemini-2.5-flash-preview-tts', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1317,17 +1322,11 @@ export default function App() {
     setAiIsLoading(true);
     setDeepScanResult('');
     triggerToast('Đang quét toàn diện song song Layer 1 & 2 (gemini-2.5-flash)...');
-    const apiKey = GEMINI_API_KEY;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const promptText = `Phân tích mâu thuẫn hệ thống: Tầng 1 (Hộ KD cá thể số hóa 38%) vs Tầng 2 (Khóa đào tạo = ${activeMetrics.layer2.nhomC.trainingCourses.year}). Nêu 3 khuyến nghị ngắn gọn.`;
     const payload = { contents: [{ parts: [{ text: promptText }] }] };
 
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
@@ -1348,8 +1347,6 @@ export default function App() {
   const handleGeneratePolicy = async () => {
     setIsGeneratingPolicy(true);
     setGeneratedIssuePolicy('');
-    const apiKey = GEMINI_API_KEY;
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const payload = {
       contents: [
         {
@@ -1362,11 +1359,7 @@ export default function App() {
       ],
     };
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await requestGemini('gemini-2.5-flash', 'generateContent', payload);
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
         throw new Error(errJson.error?.message || `HTTP ${response.status}`);
