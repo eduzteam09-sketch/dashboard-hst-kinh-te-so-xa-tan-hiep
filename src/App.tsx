@@ -1421,6 +1421,13 @@ export default function App() {
           >
             <Upload className="h-3.5 w-3.5" /> <span>Nạp PDF Dữ Liệu</span>
           </button>
+
+          <button
+            onClick={handleResetData}
+            className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all"
+          >
+            <RefreshCw className="h-3.5 w-3.5" /> <span>Reset Dữ Liệu</span>
+          </button>
         </div>
       </header>
 
