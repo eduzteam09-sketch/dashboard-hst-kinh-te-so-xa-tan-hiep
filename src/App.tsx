@@ -961,7 +961,29 @@ export default function App() {
   const [isGeneratingPolicy, setIsGeneratingPolicy] = useState(false);
 
   const audioRef = useRef(null);
-  const [periodicData, setPeriodicData] = useState(INITIAL_PERIODIC_DATA);
+  const [periodicData, setPeriodicData] = useState(() => {
+    const saved = localStorage.getItem('periodic_data');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Error parsing saved periodic data', e);
+      }
+    }
+    return INITIAL_PERIODIC_DATA;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('periodic_data', JSON.stringify(periodicData));
+  }, [periodicData]);
+
+  const handleResetData = () => {
+    if (window.confirm('Bạn có chắc chắn muốn khôi phục dữ liệu mặc định? Toàn bộ dữ liệu bóc tách từ PDF đã lưu sẽ bị xóa.')) {
+      localStorage.removeItem('periodic_data');
+      setPeriodicData(INITIAL_PERIODIC_DATA);
+      triggerToast('Đã khôi phục dữ liệu gốc thành công!');
+    }
+  };
 
   // Combined Active State (Đã loại bỏ cơ chế cộng dồn dữ liệu giả lập)
   const activeMetrics = useMemo(() => {
