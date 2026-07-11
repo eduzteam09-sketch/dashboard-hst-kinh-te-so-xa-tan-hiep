@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
   TrendingUp,
   TrendingDown,
@@ -71,888 +71,21 @@ const requestGemini = async (model: string, action: string, payload: any) => {
   }
 };
 
-// Static Zone Coordinates & Info
-const ZONES = [
-  {
-    id: 'my-binh',
-    name: 'Phường Mỹ Bình',
-    dei: 82,
-    status: 'Rất cao',
-    color: '#22C55E',
-    desc: 'Trung tâm hành chính phường • Trọng điểm số hóa doanh nghiệp.',
-    enterprises: 95,
-    cloud: 3,
-    erp: 2,
-  },
-  {
-    id: 'my-long',
-    name: 'Phường Mỹ Long',
-    dei: 64,
-    status: 'Khá',
-    color: '#10B981',
-    desc: 'Vùng sản xuất đặc sản truyền thống ứng dụng định danh số QR.',
-    enterprises: 65,
-    cloud: 1,
-    erp: 1,
-  },
-  {
-    id: 'my-phuoc',
-    name: 'Phường Mỹ Phước',
-    dei: 41,
-    status: 'Thấp',
-    color: '#EF4444',
-    desc: 'Đang thử nghiệm phổ cập Nhật ký khai thác Blockchain.',
-    enterprises: 30,
-    cloud: 0,
-    erp: 0,
-  },
-  {
-    id: 'my-quy',
-    name: 'Phường Mỹ Quý',
-    dei: 58,
-    status: 'Trung bình',
-    color: '#F59E0B',
-    desc: 'Đang số hóa hạ tầng thanh toán không tiền mặt.',
-    enterprises: 21,
-    cloud: 0,
-    erp: 1,
-  },
-];
+import {
+  subscribeZones,
+  subscribePeriodicData,
+  subscribeCommuneData,
+  upsertPeriodicLayer2,
+} from './services/firestoreService';
 
-// Initial Parallel Database containing BOTH layers fully synced with documents
-const INITIAL_PERIODIC_DATA = {
-  'T12/2025': {
-    id: 'T12/2025',
-    label: 'Tháng 12 / 2025',
-    quarter: 'Q4/2025',
-    year: '2025',
-    layer1: {
-      deiScore: 68,
-      b1: { total: 480, active: 280, cloud: 120, erp: 60, ai: 30 },
-      b2: { total: 140, active: 110, ecom: 90, qr: 70, export: 8 },
-      b3: { revenue: 0, orders: 0, repeatRatio: 0, newCustomers: 0, averageValue: 0 },
-      b4: { ratio: 0, qrPay: 0, mobileBank: 0, eWallet: 0, pos: 0 },
-      b5: { total: 0, active: 0, levels: [0, 0, 0, 0, 0] },
-      b6: { ratio: 0, onlineGuests: 0, revenue: 0 },
-      b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
-      b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
-      b9: {
-        households: { total: 0, digitalPay: 0, ecom: 0 },
-        smes: { total: 0, erp: 0, crm: 0, cloud: 0 },
-        large: { total: 0, ai: 0, automation: 0 },
-      },
-    },
-    layer2: {
-      nhomA: {
-        digitalEnterprises: { month: 10, year: 95 },
-        cloudEnterprises: { month: 0, year: 2 },
-        comprehensiveDigital: { month: 0, year: 1 },
-        netIdCards: { month: 0, year: 0 },
-      },
-      nhomB: {
-        webEcom: { month: 2, year: 12 },
-        digitalProducts: { month: 0, year: 2 },
-        ecomOrders: { month: 2, year: 15 },
-        growthRate: { month: 1, year: 10 },
-      },
-      nhomC: {
-        erpSystems: { month: 0, year: 1 },
-        totalPersonnel: { month: 50, year: 3500 },
-        trainingCourses: { month: 0, year: 1 },
-      },
-      nhomD: {
-        pageViews: { month: 1200, year: 12000 },
-        viewers: { month: 200, year: 2100 },
-        googleSeo: { month: 50000, year: 950000 },
-        customers: { month: 150, year: 1800 },
-        revenue: { month: 4, year: 45 },
-      },
-      nhomE: {
-        enterprises: { month: 5, year: 180 },
-        charityProjects: { month: 1, year: 4 },
-        boardNews: { month: 5, year: 45 },
-        projects: { month: 0, year: 4 },
-        investmentCalls: { month: 1, year: 5 },
-        tourismLocations: { month: 0, year: 4 },
-        featuredEvents: { month: 1, year: 3 },
-        digitalTransformations: { month: 0, year: 1 },
-        libraryDocs: { month: 0, year: 2 },
-      },
-    },
-    layer3: {
-      // Thay vì các số hiện tại, hãy set về 0:
-      investmentProjects: { month: 0, quarter: 0, year: 0, total: 0 },
-      planningInfo: { month: 0, quarter: 0, year: 0, total: 0 },
-    },
-    layer4: {
-      policy: { total: 0, enterprise: 0, household: 0, cooperative: 0 },
-      feedback: { total: 0, resolved: 0, pending: 0, reviewing: 0 },
-    },
-    layer5: {
-      points: { total: 0, active: 0 },
-      hubs: { total: 0, communes: 0 },
-      metrics: { coverage: 0, revenue: 0, orders: 0 },
-    },
-  },
-  'T05/2026': {
-    id: 'T05/2026',
-    label: 'Tháng 05 / 2026',
-    quarter: 'Q2/2026',
-    year: '2026',
-    layer1: {
-      deiScore: 76,
-      b1: { total: 520, active: 318, cloud: 165, erp: 97, ai: 56 },
-      b2: { total: 152, active: 131, ecom: 118, qr: 96, export: 18 },
-      b3: { revenue: 0, orders: 0, repeatRatio: 0, newCustomers: 0, averageValue: 0 },
-      b4: { ratio: 0, qrPay: 0, mobileBank: 0, eWallet: 0, pos: 0 },
-      b5: { total: 0, active: 0, levels: [0, 0, 0, 0, 0] },
-      b6: { ratio: 0, onlineGuests: 0, revenue: 0 },
-      b7: { farmRatio: 0, qrTrace: 0, iotFarm: 0, ecomAgri: 0 },
-      b8: { startups: 0, projects: 0, mentors: 0, investors: 0 },
-      b9: {
-        households: { total: 0, digitalPay: 0, ecom: 0 },
-        smes: { total: 0, erp: 0, crm: 0, cloud: 0 },
-        large: { total: 0, ai: 0, automation: 0 },
-      },
-    },
-    // OFF MẶC ĐỊNH TỪ ĐẦU (ALL ZERO) THEO YÊU CẦU ĐỂ TEST WEB SYNC
-    layer2: {
-      nhomA: {
-        digitalEnterprises: { month: 0, year: 0 },
-        cloudEnterprises: { month: 0, year: 0 },
-        comprehensiveDigital: { month: 0, year: 0 },
-        netIdCards: { month: 0, year: 0 },
-      },
-      nhomB: {
-        webEcom: { month: 0, year: 0 },
-        digitalProducts: { month: 0, year: 0 },
-        ecomOrders: { month: 0, year: 0 },
-        growthRate: { month: 0, year: 0 },
-      },
-      nhomC: {
-        erpSystems: { month: 0, year: 0 },
-        totalPersonnel: { month: 0, year: 0 },
-        trainingCourses: { month: 0, year: 0 },
-      },
-      nhomD: {
-        pageViews: { month: 0, year: 0 },
-        viewers: { month: 0, year: 0 },
-        googleSeo: { month: 0, year: 0 },
-        customers: { month: 0, year: 0 },
-        revenue: { month: 0, year: 0 },
-      },
-      nhomE: {
-        enterprises: { month: 0, year: 0 },
-        charityProjects: { month: 0, year: 0 },
-        boardNews: { month: 0, year: 0 },
-        projects: { month: 0, year: 0 },
-        investmentCalls: { month: 0, year: 0 },
-        tourismLocations: { month: 0, year: 0 },
-        featuredEvents: { month: 0, year: 0 },
-        digitalTransformations: { month: 0, year: 0 },
-        libraryDocs: { month: 0, year: 0 },
-      },
-    },
-    layer3: {
-      // Thay vì các số hiện tại, hãy set về 0:
-      investmentProjects: { month: 0, quarter: 0, year: 0, total: 0 },
-      planningInfo: { month: 0, quarter: 0, year: 0, total: 0 },
-    },
-    layer4: {
-      policy: { total: 0, enterprise: 0, household: 0, cooperative: 0 },
-      feedback: { total: 0, resolved: 0, pending: 0, reviewing: 0 },
-    },
-    layer5: {
-      points: { total: 0, active: 0 },
-      hubs: { total: 0, communes: 0 },
-      metrics: { coverage: 0, revenue: 0, orders: 0 },
-    },
-  },
+// Placeholder cho lúc đang loading từ Firestore
+const EMPTY_COMMUNE_ENTRY = {
+  b1: { total: 0, dn_total: 0, hkd_total: 0, htx_total: 0, dn_cds: 0, hkd_cds: 0, htx_cds: 0 },
+  b2: { total: 0, ocop_total: 0, ocop_3: 0, ocop_4: 0, ocop_5: 0, sp_thuong: 0, dv: 0 },
 };
 
-const COMMUNE_DATA = {
-  'P. Rạch Giá': {
-    b1: {
-      total: 106,
-      dn_total: 97,
-      hkd_total: 8,
-      htx_total: 1,
-      dn_cds: 65,
-      hkd_cds: 4,
-      htx_cds: 1,
-    },
-    b2: {
-      total: 20,
-      ocop_total: 6,
-      ocop_3: 2,
-      ocop_4: 4,
-      ocop_5: 0,
-      sp_thuong: 7,
-      dv: 7,
-    },
-  },
-  'P. Long Xuyên': {
-    b1: {
-      total: 41,
-      dn_total: 30,
-      hkd_total: 10,
-      htx_total: 1,
-      dn_cds: 20,
-      hkd_cds: 5,
-      htx_cds: 1,
-    },
-    b2: {
-      total: 28,
-      ocop_total: 8,
-      ocop_3: 0,
-      ocop_4: 8,
-      ocop_5: 0,
-      sp_thuong: 10,
-      dv: 10,
-    },
-  },
-  'Đk. Phú Quốc': {
-    b1: {
-      total: 117,
-      dn_total: 111,
-      hkd_total: 6,
-      htx_total: 0,
-      dn_cds: 74,
-      hkd_cds: 3,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 37,
-      ocop_total: 4,
-      ocop_3: 0,
-      ocop_4: 4,
-      ocop_5: 0,
-      sp_thuong: 17,
-      dv: 16,
-    },
-  },
-  'P. Hà Tiên': {
-    b1: {
-      total: 31,
-      dn_total: 27,
-      hkd_total: 4,
-      htx_total: 0,
-      dn_cds: 18,
-      hkd_cds: 2,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 20,
-      ocop_total: 5,
-      ocop_3: 4,
-      ocop_4: 1,
-      ocop_5: 0,
-      sp_thuong: 8,
-      dv: 7,
-    },
-  },
-  'X. Châu Thành': {
-    b1: {
-      total: 29,
-      dn_total: 28,
-      hkd_total: 0,
-      htx_total: 1,
-      dn_cds: 19,
-      hkd_cds: 0,
-      htx_cds: 1,
-    },
-    b2: {
-      total: 20,
-      ocop_total: 11,
-      ocop_3: 10,
-      ocop_4: 1,
-      ocop_5: 0,
-      sp_thuong: 5,
-      dv: 4,
-    },
-  },
-  'Đk. Thổ Châu': {
-    b1: {
-      total: 43,
-      dn_total: 9,
-      hkd_total: 34,
-      htx_total: 0,
-      dn_cds: 6,
-      hkd_cds: 17,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 9,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 5,
-      dv: 4,
-    },
-  },
-  'X. Tân Hiệp': {
-    b1: {
-      total: 174,
-      dn_total: 154,
-      hkd_total: 8,
-      htx_total: 12,
-      dn_cds: 3,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 24,
-      ocop_total: 5,
-      ocop_3: 5,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 19,
-      dv: 0,
-    },
-  },
-  'X. Tân Hội': {
-    b1: {
-      total: 32,
-      dn_total: 31,
-      hkd_total: 0,
-      htx_total: 1,
-      dn_cds: 21,
-      hkd_cds: 0,
-      htx_cds: 1,
-    },
-    b2: {
-      total: 20,
-      ocop_total: 1,
-      ocop_3: 1,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 10,
-      dv: 9,
-    },
-  },
-  'X. Thạnh Đông': {
-    b1: {
-      total: 121,
-      dn_total: 97,
-      hkd_total: 0,
-      htx_total: 24,
-      dn_cds: 65,
-      hkd_cds: 0,
-      htx_cds: 20,
-    },
-    b2: {
-      total: 21,
-      ocop_total: 11,
-      ocop_3: 11,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 5,
-      dv: 5,
-    },
-  },
-  'X. Tiên Hải': {
-    b1: {
-      total: 84,
-      dn_total: 13,
-      hkd_total: 70,
-      htx_total: 1,
-      dn_cds: 9,
-      hkd_cds: 35,
-      htx_cds: 1,
-    },
-    b2: {
-      total: 16,
-      ocop_total: 1,
-      ocop_3: 1,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 8,
-      dv: 7,
-    },
-  },
-  'Đk. Kiên Hải': {
-    b1: {
-      total: 249,
-      dn_total: 225,
-      hkd_total: 18,
-      htx_total: 6,
-      dn_cds: 150,
-      hkd_cds: 9,
-      htx_cds: 5,
-    },
-    b2: {
-      total: 27,
-      ocop_total: 12,
-      ocop_3: 12,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 8,
-      dv: 7,
-    },
-  },
-  'X. Thoại Sơn': {
-    b1: {
-      total: 51,
-      dn_total: 49,
-      hkd_total: 2,
-      htx_total: 0,
-      dn_cds: 33,
-      hkd_cds: 1,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 23,
-      ocop_total: 6,
-      ocop_3: 5,
-      ocop_4: 1,
-      ocop_5: 0,
-      sp_thuong: 9,
-      dv: 8,
-    },
-  },
-  'P. Mỹ Thới': {
-    b1: {
-      total: 31,
-      dn_total: 31,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 21,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'P. Bình Đức': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. An Châu': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Mỹ Hòa Hưng': {
-    b1: {
-      total: 33,
-      dn_total: 33,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 22,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Phú Hòa': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Hội An': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Nhơn Mỹ': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Long Điền': {
-    b1: {
-      total: 19,
-      dn_total: 15,
-      hkd_total: 4,
-      htx_total: 0,
-      dn_cds: 10,
-      hkd_cds: 2,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Chợ Mới': {
-    b1: {
-      total: 30,
-      dn_total: 28,
-      hkd_total: 2,
-      htx_total: 0,
-      dn_cds: 19,
-      hkd_cds: 1,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Long Kiến': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Phú Tân': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Bình Mỹ': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Châu Phú': {
-    b1: {
-      total: 10,
-      dn_total: 10,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 7,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Bình Thạnh Đông': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Phú An': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Chợ Vàm': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Hòa Lạc': {
-    b1: {
-      total: 28,
-      dn_total: 16,
-      hkd_total: 12,
-      htx_total: 0,
-      dn_cds: 11,
-      hkd_cds: 6,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Phú Lâm': {
-    b1: {
-      total: 31,
-      dn_total: 27,
-      hkd_total: 4,
-      htx_total: 0,
-      dn_cds: 18,
-      hkd_cds: 2,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Mỹ Đức': {
-    b1: {
-      total: 30,
-      dn_total: 30,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 20,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'P. Chi Lăng': {
-    b1: {
-      total: 15,
-      dn_total: 15,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 10,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'X. Vĩnh Phong': {
-    b1: {
-      total: 45,
-      dn_total: 45,
-      hkd_total: 0,
-      htx_total: 0,
-      dn_cds: 30,
-      hkd_cds: 0,
-      htx_cds: 0,
-    },
-    b2: {
-      total: 0,
-      ocop_total: 0,
-      ocop_3: 0,
-      ocop_4: 0,
-      ocop_5: 0,
-      sp_thuong: 0,
-      dv: 0,
-    },
-  },
-  'Toàn Tỉnh': {
-    b1: {
-      total: 1655,
-      dn_total: 1250,
-      hkd_total: 320,
-      htx_total: 85,
-      dn_cds: 903,
-      hkd_cds: 87,
-      htx_cds: 35,
-    },
-    b2: {
-      total: 263,
-      ocop_total: 70,
-      ocop_3: 51,
-      ocop_4: 19,
-      ocop_5: 0,
-      sp_thuong: 100,
-      dv: 93,
-    },
-  },
-};
-
+// Dữ liệu periodicData mặc định khi Firestore chưa trả về
+const FALLBACK_PERIODIC_DATA: Record<string, any> = {};
 export default function App() {
   const [activeTab, setActiveTab] = useState('layer-1');
   const [activeSubAE, setActiveSubAE] = useState('ALL');
@@ -965,14 +98,13 @@ export default function App() {
   const [isPlayingBriefing, setIsPlayingBriefing] = useState(false);
   const [deepScanResult, setDeepScanResult] = useState('');
 
-  const currentZoneData = COMMUNE_DATA['X. Tân Hiệp'];
-
   // PDF Upload States
   const [showPdfImportModal, setShowPdfImportModal] = useState(false);
   const [pdfFile, setPdfFile] = useState(null);
   const [isExtractingPdf, setIsExtractingPdf] = useState(false);
   const [pdfLogs, setPdfLogs] = useState([]);
-  const [extractedPdfData, setExtractedPdfData] = useState(null);
+  const [extractedPdfData, setExtractedPdfData] = useState<any>(null);
+  const [extractedPdfPeriod, setExtractedPdfPeriod] = useState<{thang: number, nam: number} | null>(null);
   const [pdfErrorMsg, setPdfErrorMsg] = useState(null);
 
   const [selectedIssue, setSelectedIssue] = useState('nhom-c-training');
@@ -980,29 +112,50 @@ export default function App() {
   const [isGeneratingPolicy, setIsGeneratingPolicy] = useState(false);
 
   const audioRef = useRef(null);
-  const [periodicData, setPeriodicData] = useState(() => {
-    const saved = localStorage.getItem('periodic_data');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error('Error parsing saved periodic data', e);
-      }
-    }
-    return INITIAL_PERIODIC_DATA;
-  });
 
+  // ========================
+  // FIRESTORE STATE + REALTIME
+  // ========================
+  const [isFirestoreLoading, setIsFirestoreLoading] = useState(true);
+  const [zones, setZones] = useState<any[]>([]);
+  const [periodicData, setPeriodicData] = useState<Record<string, any>>(FALLBACK_PERIODIC_DATA);
+  const [communeData, setCommuneData] = useState<Record<string, any>>({});
+
+  // Dữ liệu xã Tân Hiệp từ Firestore (thay thế COMMUNE_DATA['X. Tân Hiệp'])
+  const currentZoneData = useMemo(() => {
+    return communeData['X. Tân Hiệp'] || EMPTY_COMMUNE_ENTRY;
+  }, [communeData]);
+
+  // Khởi tạo Firestore: seed nếu trống + lắng nghe realtime
   useEffect(() => {
-    localStorage.setItem('periodic_data', JSON.stringify(periodicData));
-  }, [periodicData]);
+    let unsubZones: (() => void) | null = null;
+    let unsubPeriodic: (() => void) | null = null;
+    let unsubCommunes: (() => void) | null = null;
 
-  const handleResetData = () => {
-    if (window.confirm('Bạn có chắc chắn muốn khôi phục dữ liệu mặc định? Toàn bộ dữ liệu bóc tách từ PDF đã lưu sẽ bị xóa.')) {
-      localStorage.removeItem('periodic_data');
-      setPeriodicData(INITIAL_PERIODIC_DATA);
-      triggerToast('Đã khôi phục dữ liệu gốc thành công!');
-    }
-  };
+    const initFirestore = async () => {
+      try {
+        unsubZones = subscribeZones((data) => setZones(data));
+        unsubPeriodic = subscribePeriodicData((data) => {
+          setPeriodicData(data);
+          setIsFirestoreLoading(false);
+        });
+        unsubCommunes = subscribeCommuneData((data) => setCommuneData(data));
+      } catch (err) {
+        console.error('[Firestore] Lỗi khởi tạo:', err);
+        setIsFirestoreLoading(false);
+      }
+    };
+
+    initFirestore();
+
+    return () => {
+      unsubZones?.();
+      unsubPeriodic?.();
+      unsubCommunes?.();
+    };
+  }, []);
+
+
 
   // Combined Active State (Đã loại bỏ cơ chế cộng dồn dữ liệu giả lập)
   const activeMetrics = useMemo(() => {
@@ -1048,14 +201,18 @@ export default function App() {
     try {
       const promptText = `
         Bạn là hệ thống trích xuất dữ liệu. Hãy đọc tài liệu PDF này và trích xuất số liệu chuyển đổi số.
-        Chỉ trích xuất dữ liệu cho 5 nhóm A, B, C, D, E.
+        Chỉ trích xuất dữ liệu cho 5 nhóm A, B, C, D, E. ĐỒNG THỜI xác định tháng và năm báo cáo từ tài liệu.
         Trả về CHỈ một đối tượng JSON chính xác theo cấu trúc này, mọi giá trị là số nguyên hoặc thập phân:
         {
-          "nhomA": { "digitalEnterprises": {"month": 0, "year": 0}, "cloudEnterprises": {"month": 0, "year": 0}, "comprehensiveDigital": {"month": 0, "year": 0}, "netIdCards": {"month": 0, "year": 0} },
-          "nhomB": { "webEcom": {"month": 0, "year": 0}, "digitalProducts": {"month": 0, "year": 0}, "ecomOrders": {"month": 0, "year": 0}, "growthRate": {"month": 0, "year": 0} },
-          "nhomC": { "erpSystems": {"month": 0, "year": 0}, "totalPersonnel": {"month": 0, "year": 0}, "trainingCourses": {"month": 0, "year": 0} },
-          "nhomD": { "pageViews": {"month": 0, "year": 0}, "viewers": {"month": 0, "year": 0}, "googleSeo": {"month": 0, "year": 0}, "customers": {"month": 0, "year": 0}, "revenue": {"month": 0, "year": 0} },
-          "nhomE": { "enterprises": {"month": 0, "year": 0}, "charityProjects": {"month": 0, "year": 0}, "boardNews": {"month": 0, "year": 0}, "projects": {"month": 0, "year": 0}, "investmentCalls": {"month": 0, "year": 0}, "tourismLocations": {"month": 0, "year": 0}, "featuredEvents": {"month": 0, "year": 0}, "digitalTransformations": {"month": 0, "year": 0}, "libraryDocs": {"month": 0, "year": 0} }
+          "thang": 8,
+          "nam": 2026,
+          "duLieu": {
+            "nhomA": { "digitalEnterprises": {"month": 0, "year": 0}, "cloudEnterprises": {"month": 0, "year": 0}, "comprehensiveDigital": {"month": 0, "year": 0}, "netIdCards": {"month": 0, "year": 0} },
+            "nhomB": { "webEcom": {"month": 0, "year": 0}, "digitalProducts": {"month": 0, "year": 0}, "ecomOrders": {"month": 0, "year": 0}, "growthRate": {"month": 0, "year": 0} },
+            "nhomC": { "erpSystems": {"month": 0, "year": 0}, "totalPersonnel": {"month": 0, "year": 0}, "trainingCourses": {"month": 0, "year": 0} },
+            "nhomD": { "pageViews": {"month": 0, "year": 0}, "viewers": {"month": 0, "year": 0}, "googleSeo": {"month": 0, "year": 0}, "customers": {"month": 0, "year": 0}, "revenue": {"month": 0, "year": 0} },
+            "nhomE": { "enterprises": {"month": 0, "year": 0}, "charityProjects": {"month": 0, "year": 0}, "boardNews": {"month": 0, "year": 0}, "projects": {"month": 0, "year": 0}, "investmentCalls": {"month": 0, "year": 0}, "tourismLocations": {"month": 0, "year": 0}, "featuredEvents": {"month": 0, "year": 0}, "digitalTransformations": {"month": 0, "year": 0}, "libraryDocs": {"month": 0, "year": 0} }
+          }
         }
       `;
 
@@ -1091,7 +248,8 @@ export default function App() {
           ...prev,
           '[SUCCESS] Trợ lý AI đã bóc tách dữ liệu từ PDF thành công! Đang hiển thị bản xem trước...',
         ]);
-        setExtractedPdfData(extractedData); // Lưu vào state tạm để xem trước
+        setExtractedPdfPeriod({ thang: extractedData.thang, nam: extractedData.nam });
+        setExtractedPdfData(extractedData.duLieu); // Lưu vào state tạm để xem trước
       } else {
         throw new Error('Empty response');
       }
@@ -1116,64 +274,78 @@ export default function App() {
       '[INFO] Đang nạp dữ liệu mẫu giả lập...',
     ]);
     const mockExtractedData = {
-      nhomA: {
-        digitalEnterprises: { month: 15, year: 120 },
-        cloudEnterprises: { month: 4, year: 8 },
-        comprehensiveDigital: { month: 2, year: 5 },
-        netIdCards: { month: 80, year: 350 },
-      },
-      nhomB: {
-        webEcom: { month: 8, year: 35 },
-        digitalProducts: { month: 4, year: 12 },
-        ecomOrders: { month: 600, year: 4500 },
-        growthRate: { month: 3, year: 20 },
-      },
-      nhomC: {
-        erpSystems: { month: 2, year: 6 },
-        totalPersonnel: { month: 150, year: 5200 },
-        trainingCourses: { month: 5, year: 22 },
-      },
-      nhomD: {
-        pageViews: { month: 8500, year: 68000 },
-        viewers: { month: 1200, year: 9500 },
-        googleSeo: { month: 180000, year: 2100000 },
-        customers: { month: 450, year: 4200 },
-        revenue: { month: 12.5, year: 135 },
-      },
-      nhomE: {
-        enterprises: { month: 20, year: 280 },
-        charityProjects: { month: 3, year: 18 },
-        boardNews: { month: 25, year: 210 },
-        projects: { month: 2, year: 12 },
-        investmentCalls: { month: 3, year: 15 },
-        tourismLocations: { month: 1, year: 8 },
-        featuredEvents: { month: 3, year: 12 },
-        digitalTransformations: { month: 2, year: 10 },
-        libraryDocs: { month: 15, year: 65 },
-      },
+      thang: 8,
+      nam: 2026,
+      duLieu: {
+        nhomA: {
+          digitalEnterprises: { month: 12, year: 85 },
+          cloudEnterprises: { month: 5, year: 45 },
+          comprehensiveDigital: { month: 2, year: 15 },
+          netIdCards: { month: 150, year: 2500 },
+        },
+        nhomB: {
+          webEcom: { month: 8, year: 120 },
+          digitalProducts: { month: 25, year: 350 },
+          ecomOrders: { month: 1200, year: 15000 },
+          growthRate: { month: 15, year: 125 },
+        },
+        nhomC: {
+          erpSystems: { month: 3, year: 25 },
+          totalPersonnel: { month: 45, year: 550 },
+          trainingCourses: { month: 2, year: 18 },
+        },
+        nhomD: {
+          pageViews: { month: 5000, year: 65000 },
+          viewers: { month: 2500, year: 32000 },
+          googleSeo: { month: 15, year: 250 },
+          customers: { month: 300, year: 4500 },
+          revenue: { month: 150, year: 2500 },
+        },
+        nhomE: {
+          enterprises: { month: 8, year: 145 },
+          charityProjects: { month: 2, year: 15 },
+          boardNews: { month: 15, year: 180 },
+          projects: { month: 5, year: 45 },
+          investmentCalls: { month: 3, year: 15 },
+          tourismLocations: { month: 1, year: 8 },
+          featuredEvents: { month: 3, year: 12 },
+          digitalTransformations: { month: 2, year: 10 },
+          libraryDocs: { month: 15, year: 65 },
+        },
+      }
     };
     setTimeout(() => {
       setPdfLogs((prev) => [
         ...prev,
         '[SUCCESS] Đã nạp dữ liệu mẫu thành công! Vui lòng kiểm tra bản xem trước bên dưới và xác nhận nạp.',
       ]);
-      setExtractedPdfData(mockExtractedData);
+      setExtractedPdfPeriod({ thang: mockExtractedData.thang, nam: mockExtractedData.nam });
+      setExtractedPdfData(mockExtractedData.duLieu);
       setPdfErrorMsg(null);
       setIsExtractingPdf(false);
     }, 1000);
   };
 
-  const handleApplyPdfData = () => {
-    if (!extractedPdfData) return;
-    setPeriodicData((prev) => {
-      const newData = { ...prev };
-      newData[selectedPeriod] = {
-        ...newData[selectedPeriod],
-        layer2: extractedPdfData,
-      };
-      return newData;
-    });
-    triggerToast('Đã xác nhận: Nạp dữ liệu từ PDF vào Tầng 2 thành công!');
+  const handleApplyPdfData = async () => {
+    if (!extractedPdfData || !extractedPdfPeriod) {
+      triggerToast('Dữ liệu PDF không hợp lệ hoặc thiếu thông tin Tháng/Năm.');
+      return;
+    }
+    
+    try {
+      const newPeriodKey = await upsertPeriodicLayer2(
+        extractedPdfPeriod.thang, 
+        extractedPdfPeriod.nam, 
+        extractedPdfData
+      );
+      
+      triggerToast(`Đã lưu dữ liệu thành công cho kỳ: ${newPeriodKey}`);
+      // Tự động chuyển view sang tháng mới nạp
+      setSelectedPeriod(newPeriodKey);
+    } catch (err) {
+      console.error('[Firestore] Lỗi ghi PDF data:', err);
+      triggerToast('Lỗi khi lưu dữ liệu. Vui lòng thử lại.');
+    }
     setShowPdfImportModal(false);
     setPdfFile(null);
     setPdfLogs([]);
@@ -1186,6 +358,7 @@ export default function App() {
     setPdfFile(null);
     setPdfLogs([]);
     setExtractedPdfData(null);
+    setExtractedPdfPeriod(null);
     setPdfErrorMsg(null);
   };
 
@@ -1392,6 +565,155 @@ export default function App() {
     setShowPdfImportModal(false);
   };
 
+  if (isFirestoreLoading) {
+    return (
+      <div className="min-h-screen bg-[#07111F] flex flex-col items-center justify-center text-cyan-400 font-mono">
+        <RefreshCw className="w-8 h-8 animate-spin mb-4" />
+        <p>Đang đồng bộ dữ liệu Hệ Sinh Thái từ hệ thống đám mây...</p>
+      </div>
+    );
+  }
+
+  // Màn hình trống nếu Database hoàn toàn chưa có dữ liệu báo cáo nào
+  if (!activeMetrics || !activeMetrics.layer1) {
+    return (
+      <div className="min-h-screen bg-[#07111F] flex flex-col items-center justify-center text-slate-300 font-sans p-6">
+        <div className="bg-[#0A2540] border border-cyan-500/20 p-8 rounded-2xl max-w-md text-center shadow-2xl shadow-cyan-900/20">
+          <Upload className="w-12 h-12 text-emerald-400 mx-auto mb-4 opacity-80" />
+          <h2 className="text-xl font-bold text-cyan-400 mb-2">Chưa có Dữ Liệu Báo Cáo</h2>
+          <p className="text-sm text-slate-400 mb-6">
+            Database của bạn hiện tại đang trống. Vui lòng tải lên một file báo cáo PDF (dữ liệu mẫu hoặc file thực tế) để hệ thống tự động khởi tạo dữ liệu và cấu trúc hiển thị.
+          </p>
+          <button
+            onClick={() => setShowPdfImportModal(true)}
+            className="bg-emerald-500 hover:bg-emerald-600 text-slate-900 px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 mx-auto w-full"
+          >
+            <Upload className="h-4 w-4" /> Nạp PDF Dữ Liệu Đầu Tiên
+          </button>
+        </div>
+
+        {/* Cửa sổ Modal vẫn cần được render ở đây để có thể mở lên */}
+        {showPdfImportModal && (
+          <div className="fixed inset-0 bg-[#07111F]/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+            <div className="bg-[#0A2540] border border-cyan-500/30 rounded-2xl w-full max-w-4xl shadow-2xl flex flex-col h-[85vh]">
+              {/* Header Modal */}
+              <div className="flex items-center justify-between p-4 border-b border-cyan-500/20">
+                <div className="flex items-center gap-2">
+                  <div className="bg-emerald-500/20 p-2 rounded-lg">
+                    <FileText className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-cyan-300">
+                      Nhập Dữ Liệu Từ Báo Cáo PDF
+                    </h3>
+                    <p className="text-[10px] text-slate-400">
+                      Sử dụng Gemini 3.1 Flash Lite AI để bóc tách dữ liệu
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={resetPdfModal}
+                  className="p-2 hover:bg-white/5 rounded-lg text-slate-400 hover:text-white transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Main Modal Content (Minimal version for empty state) */}
+              <div className="flex-1 overflow-hidden flex flex-col md:flex-row gap-4 p-4">
+                <div className="w-full md:w-1/3 flex flex-col gap-4">
+                  <div className="border-2 border-dashed border-cyan-500/30 bg-[#122A4E]/30 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:border-emerald-500/50 transition-colors group relative h-40">
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    <Upload className="h-8 w-8 text-cyan-500/50 group-hover:text-emerald-400 mb-3 transition-colors" />
+                    <span className="text-xs font-bold text-cyan-300 block mb-1">
+                      Kéo thả hoặc nhấn để chọn file
+                    </span>
+                    <span className="text-[10px] text-slate-500">
+                      Chỉ hỗ trợ file PDF
+                    </span>
+                  </div>
+                  {pdfFile && (
+                    <div className="bg-[#122A4E]/50 border border-cyan-500/20 rounded-xl p-3 flex items-start gap-3">
+                      <div className="bg-red-500/20 p-2 rounded-lg mt-0.5">
+                        <FileText className="h-4 w-4 text-red-400" />
+                      </div>
+                      <div className="flex-1 overflow-hidden">
+                        <p className="text-xs font-bold text-slate-200 truncate">
+                          {pdfFile.name}
+                        </p>
+                        <p className="text-[10px] text-slate-400">
+                          {pdfFile.size}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    onClick={handleExtractPdf}
+                    disabled={!pdfFile || isExtractingPdf}
+                    className="w-full py-2.5 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-600/20"
+                  >
+                    {isExtractingPdf ? (
+                      <>
+                        <RefreshCw className="h-4 w-4 animate-spin" /> Đang
+                        phân tích...
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="h-4 w-4" /> Bắt Đầu Bóc Tách AI
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={handleLoadMockData}
+                    disabled={isExtractingPdf}
+                    className="py-1.5 px-3 bg-emerald-500/20 border border-emerald-500/50 hover:bg-emerald-600 hover:text-slate-900 text-emerald-400 rounded-lg text-xs font-bold transition-all mt-2"
+                  >
+                    Sử Dụng Dữ Liệu Mẫu
+                  </button>
+                </div>
+                <div className="flex-1 bg-[#122A4E]/30 rounded-xl border border-cyan-500/20 p-4 overflow-y-auto">
+                  <h4 className="text-sm font-bold text-cyan-400 mb-3 sticky top-0 bg-[#122A4E]/30 py-1 backdrop-blur-md">
+                    Trạng Thái Xử Lý
+                  </h4>
+                  <div className="space-y-2 mb-4">
+                    {pdfLogs.map((log, i) => (
+                      <div key={i} className={`text-xs p-2 rounded border ${log.includes('[ERROR]') ? 'bg-red-500/10 border-red-500/30 text-red-400' : log.includes('[SUCCESS]') ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-slate-800/50 border-slate-700 text-slate-300'}`}>
+                        {log}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border-t border-cyan-500/20 flex justify-end gap-3 bg-[#0A2540] rounded-b-2xl">
+                <button
+                  onClick={resetPdfModal}
+                  className="px-4 py-2 hover:bg-white/5 text-slate-300 rounded-xl text-xs font-bold transition-all"
+                >
+                  Hủy bỏ
+                </button>
+                <button
+                  onClick={() => {
+                    handleApplyPdfData();
+                    setShowPdfImportModal(false);
+                  }}
+                  disabled={!extractedPdfData || !extractedPdfPeriod}
+                  className="px-6 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2"
+                >
+                  <CheckCircle2 className="h-4 w-4" /> Xác Nhận Lưu Dữ Liệu
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#07111F] text-white font-sans antialiased selection:bg-cyan-500 flex flex-col overflow-x-hidden">
       {/* Toast Notification */}
@@ -1450,13 +772,6 @@ export default function App() {
             className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all"
           >
             <Upload className="h-3.5 w-3.5" /> <span>Nạp PDF Dữ Liệu</span>
-          </button>
-
-          <button
-            onClick={handleResetData}
-            className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all"
-          >
-            <RefreshCw className="h-3.5 w-3.5" /> <span>Reset Dữ Liệu</span>
           </button>
         </div>
       </header>
@@ -2414,27 +1729,27 @@ export default function App() {
                     <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
                       <span className="text-xs font-bold text-cyan-400 block mb-3">1. Hộ Kinh Doanh Cá Thể</span>
                       <div className="space-y-3">
-                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số hộ:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.households.total.toLocaleString()}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Thanh toán số:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9.households.digitalPay.toLocaleString()}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Bán hàng Ecom:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9.households.ecom.toLocaleString()}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số hộ:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9?.households?.total?.toLocaleString() || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Thanh toán số:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9?.households?.digitalPay?.toLocaleString() || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Bán hàng Ecom:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9?.households?.ecom?.toLocaleString() || '0'}</span></div>
                       </div>
                     </div>
                     {/* SME */}
                     <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
                       <span className="text-xs font-bold text-indigo-400 block mb-3">2. Doanh nghiệp vừa và nhỏ</span>
                       <div className="space-y-3">
-                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số DN:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.smes.total}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Sử dụng Cloud:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9.smes.cloud}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Hệ thống QLDN:</span> <span className="font-mono text-amber-400">{activeMetrics.layer1.b9.smes.erp}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tổng số DN:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9?.smes?.total || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Sử dụng Cloud:</span> <span className="font-mono text-cyan-400">{activeMetrics.layer1.b9?.smes?.cloud || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Hệ thống QLDN:</span> <span className="font-mono text-amber-400">{activeMetrics.layer1.b9?.smes?.erp || '0'}</span></div>
                       </div>
                     </div>
                     {/* DN Lớn */}
                     <div className="bg-[#122A4E]/30 border border-cyan-500/10 rounded-2xl p-4">
                       <span className="text-xs font-bold text-purple-400 block mb-3">3. DN Lớn & Tiên phong AI</span>
                       <div className="space-y-3">
-                        <div className="flex justify-between text-xs text-slate-300"><span>Doanh nghiệp lớn:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9.large.total}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Tự động hóa:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9.large.automation}</span></div>
-                        <div className="flex justify-between text-xs text-slate-300"><span>Ứng dụng AI:</span> <span className="font-mono text-rose-400">{activeMetrics.layer1.b9.large.ai}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Doanh nghiệp lớn:</span> <span className="font-mono text-white">{activeMetrics.layer1.b9?.large?.total || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Tự động hóa:</span> <span className="font-mono text-emerald-400">{activeMetrics.layer1.b9?.large?.automation || '0'}</span></div>
+                        <div className="flex justify-between text-xs text-slate-300"><span>Ứng dụng AI:</span> <span className="font-mono text-rose-400">{activeMetrics.layer1.b9?.large?.ai || '0'}</span></div>
                       </div>
                     </div>
                   </div>
@@ -3631,8 +2946,12 @@ export default function App() {
               {extractedPdfData && (
                 <div className="mt-4 border-t border-emerald-500/20 pt-4 animate-in slide-in-from-bottom-2">
                   <h4 className="text-xs font-bold text-emerald-400 mb-3 uppercase tracking-wider flex items-center gap-1.5">
-                    <Search className="h-4 w-4" /> BẢN XEM TRƯỚC DỮ LIỆU ĐÃ
-                    TRÍCH XUẤT TỪ PDF:
+                    <Search className="h-4 w-4" /> BẢN XEM TRƯỚC DỮ LIỆU ĐÃ TRÍCH XUẤT TỪ PDF
+                    {extractedPdfPeriod && (
+                      <span className="text-white bg-emerald-500/20 px-2 py-0.5 rounded-full ml-1">
+                        (Tháng {extractedPdfPeriod.thang}/{extractedPdfPeriod.nam})
+                      </span>
+                    )}:
                   </h4>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-[11px] max-h-[280px] overflow-y-auto pr-1">
