@@ -11,7 +11,7 @@ import { db } from '../firebase';
 const encodePeriodId = (key: string) => key.replace(/\//g, '-');
 const decodePeriodId = (docId: string) => docId.replace(/^(T\d+)-(\d+)$/, '$1/$2');
 
-const DEFAULT_LAYER1 = {
+export const DEFAULT_LAYER1 = {
   deiScore: 68,
   b1: { total: 480, active: 280, cloud: 120, erp: 60, ai: 30 },
   b2: { total: 140, active: 110, ecom: 90, qr: 70, export: 8 },
@@ -32,6 +32,67 @@ const DEFAULT_LAYER1 = {
     smes: { total: 140, erp: 45, crm: 85, cloud: 110 },
     large: { total: 10, ai: 3, automation: 6 },
   }
+};
+
+export const DEFAULT_LAYER2 = {
+  nhomA: {
+    digitalEnterprises: { month: 0, year: 0 },
+    cloudEnterprises: { month: 0, year: 0 },
+    comprehensiveDigital: { month: 0, year: 0 },
+    netIdCards: { month: 0, year: 0 },
+  },
+  nhomB: {
+    webEcom: { month: 0, year: 0 },
+    digitalProducts: { month: 0, year: 0 },
+    ecomOrders: { month: 0, year: 0 },
+    growthRate: { month: 0, year: 0 },
+  },
+  nhomC: {
+    erpSystems: { month: 0, year: 0 },
+    totalPersonnel: { month: 0, year: 0 },
+    trainingCourses: { month: 0, year: 0 },
+  },
+  nhomD: {
+    pageViews: { month: 0, year: 0 },
+    viewers: { month: 0, year: 0 },
+    googleSeo: { month: 0, year: 0 },
+    customers: { month: 0, year: 0 },
+    revenue: { month: 0, year: 0 },
+  },
+  nhomE: {
+    enterprises: { month: 0, year: 0 },
+    charityProjects: { month: 0, year: 0 },
+    boardNews: { month: 0, year: 0 },
+    projects: { month: 0, year: 0 },
+    investmentCalls: { month: 0, year: 0 },
+    tourismLocations: { month: 0, year: 0 },
+    featuredEvents: { month: 0, year: 0 },
+    digitalTransformations: { month: 0, year: 0 },
+    libraryDocs: { month: 0, year: 0 },
+  },
+};
+
+export const DEFAULT_LAYER3 = {
+  education: { schools: 0, platforms: 0, onlineStudents: 0 },
+  health: { clinics: 0, ehrRatio: 0, telemedicine: 0 },
+  agri: { smartFarms: 0, iotSensors: 0, traceability: 0 },
+  admin: { publicServices: 0, level4Ratio: 0 },
+  investmentProjects: { month: 0, quarter: 0, year: 0, total: 0 },
+  planningInfo: { month: 0, quarter: 0, year: 0, total: 0 },
+};
+
+export const DEFAULT_LAYER4 = {
+  households: { total: 0, digitalPay: 0, ecom: 0 },
+  smes: { total: 0, erp: 0, crm: 0, cloud: 0 },
+  large: { total: 0, ai: 0, automation: 0 },
+  policy: { total: 0, enterprise: 0, household: 0, cooperative: 0 },
+  feedback: { total: 0, resolved: 0, pending: 0, reviewing: 0 },
+};
+
+export const DEFAULT_LAYER5 = {
+  points: { total: 0, active: 0 },
+  hubs: { total: 0, communes: 0 },
+  metrics: { coverage: 0, revenue: 0, orders: 0 },
 };
 
 // ============================================================
@@ -100,11 +161,17 @@ export async function upsertPeriodicLayer2(
   } else {
     // Nếu chưa có, copy template (layer1, 3, 4, 5) từ tháng fallback (ví dụ T05/2026)
     const fallbackDoc = await getDocFn(doc(db, 'periodicData', encodePeriodId('T05/2026')));
-    let templateData: any = {};
+    let templateData: any;
     if (fallbackDoc.exists()) {
-       templateData = fallbackDoc.data();
+      templateData = fallbackDoc.data();
     } else {
-       templateData = { layer1: DEFAULT_LAYER1 };
+      templateData = { 
+        layer1: DEFAULT_LAYER1,
+        layer2: DEFAULT_LAYER2,
+        layer3: DEFAULT_LAYER3,
+        layer4: DEFAULT_LAYER4,
+        layer5: DEFAULT_LAYER5
+      };
     }
     
     const newDoc = {

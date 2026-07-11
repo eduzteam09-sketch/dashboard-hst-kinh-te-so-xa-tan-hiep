@@ -76,7 +76,13 @@ import {
   subscribePeriodicData,
   subscribeCommuneData,
   upsertPeriodicLayer2,
+  DEFAULT_LAYER1,
+  DEFAULT_LAYER2,
+  DEFAULT_LAYER3,
+  DEFAULT_LAYER4,
+  DEFAULT_LAYER5
 } from './services/firestoreService';
+
 
 // Placeholder cho lúc đang loading từ Firestore
 const EMPTY_COMMUNE_ENTRY = {
@@ -84,8 +90,19 @@ const EMPTY_COMMUNE_ENTRY = {
   b2: { total: 0, ocop_total: 0, ocop_3: 0, ocop_4: 0, ocop_5: 0, sp_thuong: 0, dv: 0 },
 };
 
-// Dữ liệu periodicData mặc định khi Firestore chưa trả về
-const FALLBACK_PERIODIC_DATA: Record<string, any> = {};
+function mergeDefaults(data: any, defaults: any) {
+  if (!data) return defaults;
+  const result = { ...defaults };
+  for (const key in data) {
+    if (data[key] && typeof data[key] === 'object' && !Array.isArray(data[key])) {
+      result[key] = mergeDefaults(data[key], defaults[key] || {});
+    } else {
+      result[key] = data[key];
+    }
+  }
+  return result;
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('layer-1');
   const [activeSubAE, setActiveSubAE] = useState('ALL');
@@ -118,7 +135,7 @@ export default function App() {
   // ========================
   const [isFirestoreLoading, setIsFirestoreLoading] = useState(true);
   const [zones, setZones] = useState<any[]>([]);
-  const [periodicData, setPeriodicData] = useState<Record<string, any>>(FALLBACK_PERIODIC_DATA);
+  const [periodicData, setPeriodicData] = useState<Record<string, any>>({});
   const [communeData, setCommuneData] = useState<Record<string, any>>({});
 
   // Dữ liệu xã Tân Hiệp từ Firestore (thay thế COMMUNE_DATA['X. Tân Hiệp'])
@@ -159,7 +176,15 @@ export default function App() {
 
   // Combined Active State (Đã loại bỏ cơ chế cộng dồn dữ liệu giả lập)
   const activeMetrics = useMemo(() => {
-    return periodicData[selectedPeriod] || periodicData['T05/2026'];
+    const rawMetrics = periodicData[selectedPeriod] || periodicData['T05/2026'] || {};
+    return {
+      ...rawMetrics,
+      layer1: mergeDefaults(rawMetrics.layer1, DEFAULT_LAYER1),
+      layer2: mergeDefaults(rawMetrics.layer2, DEFAULT_LAYER2),
+      layer3: mergeDefaults(rawMetrics.layer3, DEFAULT_LAYER3),
+      layer4: mergeDefaults(rawMetrics.layer4, DEFAULT_LAYER4),
+      layer5: mergeDefaults(rawMetrics.layer5, DEFAULT_LAYER5),
+    };
   }, [periodicData, selectedPeriod]);
 
   // Handle PDF Extraction via AI
