@@ -1,8 +1,6 @@
 import {
   collection,
   doc,
-  getDocs,
-  setDoc,
   onSnapshot,
   type Unsubscribe,
 } from 'firebase/firestore';
