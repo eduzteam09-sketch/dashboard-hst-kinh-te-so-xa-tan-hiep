@@ -87,21 +87,21 @@ import {
 // Placeholder cho lúc đang loading từ Firestore
 const EMPTY_COMMUNE_ENTRY = {
   b1: {
-    total: 58,
-    dn_total: 52,
-    hkd_total: 0,
-    htx_total: 6,
-    dn_cds: 35,
+    total: 177,
+    dn_total: 154,
+    hkd_total: 11,
+    htx_total: 12,
+    dn_cds: 3,
     hkd_cds: 0,
-    htx_cds: 5,
+    htx_cds: 0,
   },
   b2: {
-    total: 22,
-    ocop_total: 5,
-    ocop_3: 5,
+    total: 24,
+    ocop_total: 9,
+    ocop_3: 9,
     ocop_4: 0,
     ocop_5: 0,
-    sp_thuong: 9,
+    sp_thuong: 15,
     dv: 8,
   },
 };
