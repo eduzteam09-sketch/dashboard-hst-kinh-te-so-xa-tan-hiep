@@ -102,7 +102,7 @@ const EMPTY_COMMUNE_ENTRY = {
     ocop_4: 0,
     ocop_5: 0,
     sp_thuong: 15,
-    dv: 8,
+    dv: 0,
   },
 };
 
