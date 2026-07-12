@@ -86,8 +86,24 @@ import {
 
 // Placeholder cho lúc đang loading từ Firestore
 const EMPTY_COMMUNE_ENTRY = {
-  b1: { total: 0, dn_total: 0, hkd_total: 0, htx_total: 0, dn_cds: 0, hkd_cds: 0, htx_cds: 0 },
-  b2: { total: 0, ocop_total: 0, ocop_3: 0, ocop_4: 0, ocop_5: 0, sp_thuong: 0, dv: 0 },
+  b1: {
+    total: 58,
+    dn_total: 52,
+    hkd_total: 0,
+    htx_total: 6,
+    dn_cds: 35,
+    hkd_cds: 0,
+    htx_cds: 5,
+  },
+  b2: {
+    total: 22,
+    ocop_total: 5,
+    ocop_3: 5,
+    ocop_4: 0,
+    ocop_5: 0,
+    sp_thuong: 9,
+    dv: 8,
+  },
 };
 
 function mergeDefaults(data: any, defaults: any) {
