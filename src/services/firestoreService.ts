@@ -6,6 +6,9 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 
+// Lấy tên collection từ file .env
+const COLLECTION_NAME = import.meta.env.VITE_APP_COLLECTION_NAME || 'periodicData';
+
 const encodePeriodId = (key: string) => key.replace(/\//g, '-');
 const decodePeriodId = (docId: string) => docId.replace(/^(T\d+)-(\d+)$/, '$1/$2');
 
@@ -105,11 +108,12 @@ export function subscribeZones(callback: (zones: any[]) => void): Unsubscribe {
   });
 }
 
-/** Lắng nghe realtime collection 'periodicData' */
+/** Lắng nghe realtime collection dữ liệu chu kỳ */
 export function subscribePeriodicData(
   callback: (data: Record<string, any>) => void
 ): Unsubscribe {
-  return onSnapshot(collection(db, 'periodicData'), (snapshot) => {
+  // ĐÃ SỬA: Thay 'periodicData' thành COLLECTION_NAME
+  return onSnapshot(collection(db, COLLECTION_NAME), (snapshot) => {
     const data: Record<string, any> = {};
     snapshot.docs.forEach((d) => {
       const originalKey = decodePeriodId(d.id);
@@ -148,7 +152,9 @@ export async function upsertPeriodicLayer2(
   const monthStr = month.toString().padStart(2, '0');
   const periodKey = `T${monthStr}/${year}`;
   const docId = encodePeriodId(periodKey);
-  const docRef = doc(db, 'periodicData', docId);
+  
+  // ĐÃ SỬA CHỖ 1: Thay 'periodicData' thành COLLECTION_NAME
+  const docRef = doc(db, COLLECTION_NAME, docId);
 
   const { getDoc: getDocFn, setDoc } = await import('firebase/firestore');
   const existing = await getDocFn(docRef);
@@ -157,8 +163,9 @@ export async function upsertPeriodicLayer2(
     // Nếu kỳ báo cáo đã tồn tại, ghi đè hoàn toàn dữ liệu mới nhất vào layer2
     await setDoc(docRef, { ...existing.data(), layer2: layer2Data });
   } else {
-    // Nếu chưa có, copy template (layer1, 3, 4, 5) từ tháng fallback (ví dụ T05/2026)
-    const fallbackDoc = await getDocFn(doc(db, 'periodicData', encodePeriodId('T05/2026')));
+    // ĐÃ SỬA CHỖ 2: Thay 'periodicData' thành COLLECTION_NAME
+    const fallbackDoc = await getDocFn(doc(db, COLLECTION_NAME, encodePeriodId('T05/2026')));
+    
     let templateData: any;
     if (fallbackDoc.exists()) {
       templateData = fallbackDoc.data();
